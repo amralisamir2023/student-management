@@ -17,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/amralisamir2023/student-management/issues"
   },
-  "homepage": "https://github.com/amralisamir2023/student-management#readme"
+  "homepage": "https://github.com/amralisamir2023/student-management#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14"
+  }
 }
