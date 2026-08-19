@@ -8,6 +8,7 @@ dotenv.config();
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const studentRoutes = require('./routes/studentRoutes');
+const departmentRoutes = require('./routes/departmentRoutes');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 connectDB();
@@ -23,6 +24,7 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/students', studentRoutes);
+app.use('/api/departments', departmentRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
