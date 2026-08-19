@@ -3,6 +3,8 @@ const app = express();
 
 // const { connectDB } = require("./config/db.config.js");
 const { PORT } = require("./config/env.config.js");
+const { logged } = require("./services/department.service.js");
+
 app.use(express.json());
 
 
