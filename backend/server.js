@@ -12,6 +12,7 @@ const authRoutes = require("./routes/authRoutes");
 const studentRoutes = require("./routes/studentRoutes");
 const departmentRoutes = require("./routes/departmentRoutes");
 const { CoursesRouter } = require("./routes/courses.routes");
+const { EnrollmentRouter } = require("./routes/enrollmentRoutes");
 
 // Error Middleware
 const {
@@ -38,6 +39,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/students", studentRoutes);
 app.use("/api/departments", departmentRoutes);
 app.use("/api/courses", CoursesRouter);
+app.use("/api/enrollments", EnrollmentRouter);
 
 // Error Handling
 app.use(notFound);
