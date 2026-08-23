@@ -2,8 +2,13 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const morgan = require('morgan');
+const path = require('path');
 
-dotenv.config();
+dotenv.config({
+  path: path.resolve(__dirname, '../.env')
+});
+
+console.log('Connecting to MongoDB...',process.env.MONGO_URI);
 
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
