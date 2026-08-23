@@ -1,20 +1,23 @@
-// NOTE: Minimal starter routes so the module is integrated and testable.
-// Owned by Amr Tarek (Departments module) — extend as needed.
 const express = require('express');
 const router = express.Router();
 
 const {
   getDepartments,
   getDepartmentById,
+  getDepartmentStudents,
+  getDepartmentCourses,
   createDepartment,
   updateDepartment,
   deleteDepartment,
 } = require('../controllers/departmentController');
+const { protect, authorize } = require('../middleware/authMiddleware');
 
 router.get('/', getDepartments);
 router.get('/:id', getDepartmentById);
-router.post('/', createDepartment);
-router.put('/:id', updateDepartment);
-router.delete('/:id', deleteDepartment);
+router.get('/:id/students', getDepartmentStudents);
+router.get('/:id/courses', getDepartmentCourses);
+router.post('/', protect, authorize('admin'), createDepartment);
+router.put('/:id', protect, authorize('admin'), updateDepartment);
+router.delete('/:id', protect, authorize('admin'), deleteDepartment);
 
 module.exports = router;

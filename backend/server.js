@@ -10,6 +10,8 @@ const authRoutes = require('./routes/authRoutes');
 const studentRoutes = require('./routes/studentRoutes');
 const departmentRoutes = require('./routes/departmentRoutes');
 const courseRoutes = require('./routes/courseRoutes');
+const instructorRoutes = require('./routes/instructorRoutes');
+const enrollmentRoutes = require('./routes/enrollmentRoutes');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 connectDB();
@@ -27,6 +29,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/students', studentRoutes);
 app.use('/api/departments', departmentRoutes);
 app.use('/api/courses', courseRoutes);
+app.use('/api/instructors', instructorRoutes);
+app.use('/api/enrollments', enrollmentRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

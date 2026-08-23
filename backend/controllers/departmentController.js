@@ -1,12 +1,19 @@
-// NOTE: Minimal starter controller (basic CRUD) so the module is integrated and testable.
-// Owned by Amr Tarek (Departments module) — extend with search / show-students / show-courses etc.
 const Department = require('../models/Department');
+const Student = require('../models/Student');
+const Course = require('../models/Course');
 
-// @desc    Get all departments
+// @desc    Get all departments (with search by name)
 // @route   GET /api/departments
 const getDepartments = async (req, res) => {
   try {
-    const departments = await Department.find();
+    const { name } = req.query;
+    const filter = {};
+
+    if (name) {
+      filter.name = { $regex: name, $options: 'i' };
+    }
+
+    const departments = await Department.find(filter);
 
     return res.status(200).json({
       success: true,
@@ -42,9 +49,93 @@ const getDepartmentById = async (req, res) => {
       data: department,
     });
   } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid department id',
+        data: null,
+      });
+    }
+
     return res.status(500).json({
       success: false,
       message: 'Server error while fetching the department',
+      data: null,
+    });
+  }
+};
+
+// @desc    Get all students that belong to a department
+// @route   GET /api/departments/:id/students
+const getDepartmentStudents = async (req, res) => {
+  try {
+    const department = await Department.findById(req.params.id);
+
+    if (!department) {
+      return res.status(404).json({
+        success: false,
+        message: 'Department not found',
+        data: null,
+      });
+    }
+
+    const students = await Student.find({ departmentId: req.params.id });
+
+    return res.status(200).json({
+      success: true,
+      message: 'Department students fetched successfully',
+      data: students,
+    });
+  } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid department id',
+        data: null,
+      });
+    }
+
+    return res.status(500).json({
+      success: false,
+      message: 'Server error while fetching department students',
+      data: null,
+    });
+  }
+};
+
+// @desc    Get all courses that belong to a department
+// @route   GET /api/departments/:id/courses
+const getDepartmentCourses = async (req, res) => {
+  try {
+    const department = await Department.findById(req.params.id);
+
+    if (!department) {
+      return res.status(404).json({
+        success: false,
+        message: 'Department not found',
+        data: null,
+      });
+    }
+
+    const courses = await Course.find({ departmentId: req.params.id }).populate('instructorId');
+
+    return res.status(200).json({
+      success: true,
+      message: 'Department courses fetched successfully',
+      data: courses,
+    });
+  } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid department id',
+        data: null,
+      });
+    }
+
+    return res.status(500).json({
+      success: false,
+      message: 'Server error while fetching department courses',
       data: null,
     });
   }
@@ -62,6 +153,14 @@ const createDepartment = async (req, res) => {
       data: department,
     });
   } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid department id',
+        data: null,
+      });
+    }
+
     if (error.code === 11000) {
       return res.status(400).json({
         success: false,
@@ -110,6 +209,14 @@ const updateDepartment = async (req, res) => {
       data: department,
     });
   } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid department id',
+        data: null,
+      });
+    }
+
     if (error.code === 11000) {
       return res.status(400).json({
         success: false,
@@ -155,6 +262,14 @@ const deleteDepartment = async (req, res) => {
       data: null,
     });
   } catch (error) {
+    if (error.name === 'CastError') {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid department id',
+        data: null,
+      });
+    }
+
     return res.status(500).json({
       success: false,
       message: 'Server error while deleting the department',
@@ -166,6 +281,8 @@ const deleteDepartment = async (req, res) => {
 module.exports = {
   getDepartments,
   getDepartmentById,
+  getDepartmentStudents,
+  getDepartmentCourses,
   createDepartment,
   updateDepartment,
   deleteDepartment,
