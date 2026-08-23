@@ -1,5 +1,3 @@
-// NOTE: Minimal starter model based on the documented spec (name, code, description).
-// Owned by Amr Tarek (Departments module) — extend/adjust as needed.
 const mongoose = require('mongoose');
 
 const departmentSchema = new mongoose.Schema(
@@ -14,6 +12,10 @@ const departmentSchema = new mongoose.Schema(
       required: [true, 'Department code is required'],
       trim: true,
       unique: true,
+      uppercase: true,
+      minlength: [2, 'Department code must be at least 2 characters'],
+      maxlength: [4, 'Department code must be at most 4 characters'],
+      match: [/^[A-Z]{2,4}$/, 'Department code must contain 2 to 4 uppercase letters'],
     },
     description: {
       type: String,

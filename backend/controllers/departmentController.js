@@ -1,9 +1,6 @@
-// NOTE: Minimal starter controller (basic CRUD) so the module is integrated and testable.
-// Owned by Amr Tarek (Departments module) — extend with search / show-students / show-courses etc.
 const Department = require('../models/Department');
 
-// @desc    Get all departments
-// @route   GET /api/departments
+
 const getDepartments = async (req, res) => {
   try {
     const departments = await Department.find();
@@ -22,8 +19,6 @@ const getDepartments = async (req, res) => {
   }
 };
 
-// @desc    Get a single department by ID
-// @route   GET /api/departments/:id
 const getDepartmentById = async (req, res) => {
   try {
     const department = await Department.findById(req.params.id);
@@ -50,8 +45,6 @@ const getDepartmentById = async (req, res) => {
   }
 };
 
-// @desc    Create a new department
-// @route   POST /api/departments
 const createDepartment = async (req, res) => {
   try {
     const department = await Department.create(req.body);
@@ -87,8 +80,6 @@ const createDepartment = async (req, res) => {
   }
 };
 
-// @desc    Update a department
-// @route   PUT /api/departments/:id
 const updateDepartment = async (req, res) => {
   try {
     const department = await Department.findByIdAndUpdate(req.params.id, req.body, {
@@ -135,8 +126,7 @@ const updateDepartment = async (req, res) => {
   }
 };
 
-// @desc    Delete a department
-// @route   DELETE /api/departments/:id
+
 const deleteDepartment = async (req, res) => {
   try {
     const department = await Department.findByIdAndDelete(req.params.id);
