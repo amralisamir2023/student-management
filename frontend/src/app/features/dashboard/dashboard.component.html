@@ -1,0 +1,82 @@
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:16px">
+  @for (s of stats; track s.label) {
+    <div class="card" style="padding:18px;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+        <div style="width:38px;height:38px;border-radius:11px;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;font-size:17px">{{ s.icon }}</div>
+        @if (s.live) {
+          <span style="font-size:11px;font-weight:700;color:var(--success);background:var(--success-bg);border-radius:20px;padding:4px 10px">live</span>
+        }
+      </div>
+      <div>
+        <div class="mono" style="font-size:32px;font-weight:800;letter-spacing:-.035em;line-height:1">{{ s.value }}</div>
+        <div style="font-size:12.5px;color:var(--text-muted);margin-top:6px;font-weight:600">{{ s.label }}</div>
+      </div>
+    </div>
+  }
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:20px;align-items:start">
+  <section class="card" style="overflow:hidden">
+    <div style="padding:17px 20px;border-bottom:1px solid var(--border-soft);display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <div>
+        <div style="font-size:14.5px;font-weight:800">Recent enrollments</div>
+        <div style="font-size:11.5px;color:var(--text-faint);margin-top:3px">Latest activity</div>
+      </div>
+      <a routerLink="/enrollments" style="font-size:12.5px;font-weight:700;white-space:nowrap">View all →</a>
+    </div>
+    <div class="table-wrap">
+      <table style="min-width:520px">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Status</th>
+            <th class="th-right">Grade</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (r of recentEnrollments; track r.student + r.course) {
+            <tr>
+              <td>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div class="avatar">{{ r.student.slice(0, 2).toUpperCase() }}</div>
+                  <span style="font-size:13px;font-weight:700;color:var(--text)">{{ r.student }}</span>
+                </div>
+              </td>
+              <td>{{ r.course }}</td>
+              <td><span [class]="r.badgeClass">{{ r.status }}</span></td>
+              <td class="mono th-right" style="text-align:right">{{ r.grade }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div style="display:flex;flex-direction:column;gap:20px">
+    <section class="card" style="padding:20px">
+      <div style="font-size:14.5px;font-weight:800">Where the data lives</div>
+      <div style="font-size:11.5px;color:var(--text-faint);margin-top:3px;margin-bottom:16px">Connection status per module</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:12.5px">
+          <span style="color:var(--text-muted)">Students</span>
+          <span style="font-weight:800;color:var(--success)">● connected to the live API</span>
+        </div>
+        @for (m of ['Departments', 'Courses', 'Instructors', 'Enrollments']; track m) {
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:12.5px">
+            <span style="color:var(--text-muted)">{{ m }}</span>
+            <span style="font-weight:800;color:var(--text-disabled)">● UI ready, mock data</span>
+          </div>
+        }
+      </div>
+    </section>
+    <section class="card" style="padding:20px">
+      <div style="font-size:14.5px;font-weight:800;margin-bottom:15px">Quick links</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <a routerLink="/students" style="font-size:12.5px;font-weight:700">→ Manage students</a>
+        <a routerLink="/departments" style="font-size:12.5px;font-weight:700">→ Browse departments</a>
+        <a routerLink="/courses" style="font-size:12.5px;font-weight:700">→ Browse courses</a>
+      </div>
+    </section>
+  </div>
+</div>
