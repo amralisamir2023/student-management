@@ -37,28 +37,49 @@ export class DashboardComponent implements OnInit {
 
   stats: StatCard[] = [
     { label: 'Students', value: '—', icon: LucideUsers, live: true },
-    { label: 'Departments', value: '—', icon: LucideBuilding2, live: false },
-    { label: 'Courses', value: '—', icon: LucideBookOpen, live: false },
-    { label: 'Instructors', value: '—', icon: LucideGraduationCap, live: false },
-    { label: 'Enrollments', value: '—', icon: LucideClipboardCheck, live: false },
+    { label: 'Departments', value: '—', icon: LucideBuilding2, live: true },
+    { label: 'Courses', value: '—', icon: LucideBookOpen, live: true },
+    { label: 'Instructors', value: '—', icon: LucideGraduationCap, live: true },
+    { label: 'Enrollments', value: '—', icon: LucideClipboardCheck, live: true },
   ];
 
   recentEnrollments: { student: string; course: string; status: string; grade: string; badgeClass: string }[] = [];
+  departmentBreakdown: { name: string; count: number; pct: number }[] = [];
 
   ngOnInit(): void {
-    this.students.list().subscribe((res) => this.setStat('Students', String(res.data?.length ?? 0)));
+    this.students.list().subscribe((res) => {
+      const list = res.data ?? [];
+      this.setStat('Students', String(list.length));
+
+      const counts = new Map<string, number>();
+      for (const s of list) {
+        const dept = s.departmentId as any;
+        const name = dept && typeof dept === 'object' ? dept.name : 'Unassigned';
+        counts.set(name, (counts.get(name) ?? 0) + 1);
+      }
+      const max = Math.max(1, ...counts.values());
+      this.departmentBreakdown = [...counts.entries()]
+        .map(([name, count]) => ({ name, count, pct: Math.round((count / max) * 100) }))
+        .sort((a, b) => b.count - a.count);
+    });
     this.departments.list().subscribe((res) => this.setStat('Departments', String(res.data?.length ?? 0)));
     this.courses.list().subscribe((res) => this.setStat('Courses', String(res.data?.length ?? 0)));
     this.instructors.list().subscribe((res) => this.setStat('Instructors', String(res.data?.length ?? 0)));
     this.enrollments.list().subscribe((res) => {
       this.setStat('Enrollments', String(res.data?.length ?? 0));
-      this.recentEnrollments = (res.data ?? []).slice(0, 5).map((e) => ({
-        student: String(e.studentId),
-        course: String(e.courseId),
-        status: e.status[0].toUpperCase() + e.status.slice(1),
-        grade: e.grade != null ? String(e.grade) : '—',
-        badgeClass: `badge badge-${e.status}`,
-      }));
+      this.recentEnrollments = (res.data ?? []).slice(0, 5).map((e) => {
+        // studentId/courseId come back populated (full objects) from the
+        // real API — fall back to the raw value only if it wasn't.
+        const student = e.studentId as any;
+        const course = e.courseId as any;
+        return {
+          student: student && typeof student === 'object' ? student.name : String(student ?? '—'),
+          course: course && typeof course === 'object' ? course.name : String(course ?? '—'),
+          status: e.status[0].toUpperCase() + e.status.slice(1),
+          grade: e.grade != null ? String(e.grade) : '—',
+          badgeClass: `badge badge-${e.status}`,
+        };
+      });
     });
   }
 

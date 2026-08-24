@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { ModuleRegistryService } from '../../../core/services/module-registry.service';
-import { ModuleConfig } from '../../../core/config/module-config.model';
+import { ModuleConfig, SelectOption } from '../../../core/config/module-config.model';
 import { EntityFormModalComponent } from '../entity-form-modal/entity-form-modal.component';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 import { LucidePlus, LucideLock, LucideAlertCircle, LucideInbox, LucideEye, LucidePencil, LucideTrash2 } from '../../icons';
@@ -44,6 +44,7 @@ export class EntityListComponent implements OnInit {
 
   search = '';
   filterValues: Record<string, string> = {};
+  resolvedFilterOptions: Record<string, SelectOption[] | undefined> = {};
 
   modalMode: 'add' | 'edit' | null = null;
   editingItem: any = null;
@@ -58,7 +59,17 @@ export class EntityListComponent implements OnInit {
       this.config = entry.config;
       this.service = entry.service;
       this.filterValues = {};
+      this.resolvedFilterOptions = {};
       this.search = '';
+
+      for (const fl of this.config.filters) {
+        if (fl.optionsLoader) {
+          fl.optionsLoader().subscribe((options) => {
+            this.resolvedFilterOptions = { ...this.resolvedFilterOptions, [fl.key]: options };
+          });
+        }
+      }
+
       this.fetch();
     });
   }

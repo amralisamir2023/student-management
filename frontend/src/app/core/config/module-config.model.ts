@@ -36,6 +36,15 @@ export interface CardStat {
   value: string;
 }
 
+export interface FilterConfig {
+  key: string;
+  label: string;
+  options: string[];
+  // When set, overrides `options` with live data (e.g. real department
+  // names/ids for the Courses "filter by department" dropdown).
+  optionsLoader?: () => Observable<SelectOption[]>;
+}
+
 export interface ModuleConfig<T> {
   key: string;
   title: string;
@@ -43,7 +52,7 @@ export interface ModuleConfig<T> {
   addLabel: string;
   searchPlaceholder: string;
   layout: 'table' | 'cards';
-  filters: { key: string; label: string; options: string[] }[];
+  filters: FilterConfig[];
   columns: ColumnConfig<T>[];
   fields: FieldConfig[];
   initials: (item: T) => string;

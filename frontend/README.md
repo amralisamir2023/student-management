@@ -12,33 +12,43 @@ npm install
 npm start        # ng serve, http://localhost:4200
 ```
 
-## What's actually connected vs mocked
+## What's actually connected
 
-| Module | Status |
+Every module talks to the real backend, real database — nothing left mocked.
+
+| Module | Backend routes |
 |---|---|
-| Auth (register / login / logout) | **Real** — `core/services/auth.service.ts` |
-| Students | **Real** — `core/services/student.service.ts` |
-| Departments | Mocked — `core/services/department.service.ts` |
-| Courses | Mocked — `core/services/course.service.ts` |
-| Instructors | Mocked — `core/services/instructor.service.ts` |
-| Enrollments | Mocked — `core/services/enrollment.service.ts` |
+| Auth (register / login / logout) | `core/services/auth.service.ts` → `/api/auth/*` |
+| Students | `core/services/student.service.ts` → `/api/students/*` |
+| Departments | `core/services/department.service.ts` → `/api/departments/*` |
+| Courses | `core/services/course.service.ts` → `/api/courses/*` |
+| Instructors | `core/services/instructor.service.ts` → `/api/instructors/*` |
+| Enrollments | `core/services/enrollment.service.ts` → `/api/enrollments/*` |
 
-Every service — real or mocked — implements the same `CrudService<T>` interface
+Every service implements the same `CrudService<T>` interface
 (`core/services/crud.service.ts`) and returns the exact same
 `{ success, message, data }` envelope the real API uses. The UI (list pages,
-detail pages, forms) was built entirely against that interface, so connecting
-a mocked module for real later is a **one-file change**: rewrite that one
-service to call `HttpClient` like `student.service.ts` does — nothing in
-`shared/components/` or the module's config needs to change.
+detail pages, forms) is built entirely against that interface — so it never
+cared whether a given module was real or mocked, which is what made
+connecting the last four modules a small, mechanical change (rewrite each
+service to call `HttpClient`, same as `student.service.ts`; nothing in
+`shared/components/` needed to change).
 
-Each mocked service file has a comment at the top pointing at the real
-backend route it should eventually call.
+Cross-module references (Course's department/instructor pickers,
+Enrollment's student/course pickers) fetch live options from the relevant
+real service — see `core/config/options-loader.util.ts`.
 
-One exception worth knowing about: the Students "Add/Edit" form needs a real,
-valid Department `_id` to submit (the backend enforces that relationship), so
-`core/services/department-lookup.service.ts` makes one real, read-only
-`GET /api/departments` call just to populate that dropdown. It is not the
-Departments module's own UI — that stays mocked.
+Two things worth knowing when a module's own field doesn't map 1:1 onto the
+UI:
+- `Enrollment`'s list view only supports filtering by `?semester=` and
+  `?search=` on the backend — there's no `?status=` filter yet
+  (`enrollmentController.js`), so the UI doesn't offer one either. Add it in
+  `core/config/enrollments.config.ts` once the backend supports it.
+- Table/select columns that reference another module (e.g. a Student's
+  Department, a Course's Instructor) render the **populated object** the
+  backend returns on every read (`{ _id, name, ... }`), not a raw id — and
+  submit back the plain `_id` string on create/update, matching what each
+  Mongoose `ref` field expects.
 
 ## Structure
 
@@ -46,7 +56,8 @@ Departments module's own UI — that stays mocked.
 src/app/
 ├── core/
 │   ├── models/        TypeScript interfaces matching the backend's shapes
-│   ├── config/        per-module config (fields, table columns, detail view)
+│   ├── config/        per-module config (fields, table columns, detail view,
+│   │                   live cross-module option loaders)
 │   ├── services/       one CRUD service per module + auth + toast
 │   └── interceptors/   attaches the JWT to every request
 ├── shared/components/  generic list / detail / form-modal / confirm-modal

@@ -1,7 +1,8 @@
 import { ModuleConfig } from './module-config.model';
 import { Student } from '../models/student.model';
 import { Department } from '../models/department.model';
-import { DepartmentLookupService } from '../services/department-lookup.service';
+import { DepartmentService } from '../services/department.service';
+import { loadOptions } from './options-loader.util';
 
 function departmentName(s: Student): string {
   const d = s.departmentId as Department;
@@ -13,7 +14,7 @@ function departmentIdValue(s: Student): string {
   return d && typeof d === 'object' ? d._id : String(s.departmentId ?? '');
 }
 
-export function buildStudentsConfig(departmentLookup: DepartmentLookupService): ModuleConfig<Student> {
+export function buildStudentsConfig(departmentService: DepartmentService): ModuleConfig<Student> {
   return {
     key: 'students',
     title: 'Students',
@@ -66,7 +67,10 @@ export function buildStudentsConfig(departmentLookup: DepartmentLookupService): 
       departmentId: departmentIdValue(s),
     }),
     optionsLoaders: {
-      departmentId: () => departmentLookup.listOptions(),
+      departmentId: loadOptions(
+        () => departmentService.list(),
+        (d) => `${d.name} (${d.code})`
+      ),
     },
     detailTitle: (s) => s.name,
     detailSubtitle: (s) => s.email,

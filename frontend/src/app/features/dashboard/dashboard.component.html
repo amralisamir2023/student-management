@@ -57,20 +57,25 @@
 
   <div style="display:flex;flex-direction:column;gap:20px">
     <section class="card" style="padding:20px">
-      <div style="font-size:14.5px;font-weight:800">Where the data lives</div>
-      <div style="font-size:11.5px;color:var(--text-faint);margin-top:3px;margin-bottom:16px">Connection status per module</div>
-      <div style="display:flex;flex-direction:column;gap:12px">
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:12.5px">
-          <span style="color:var(--text-muted)">Students</span>
-          <span style="font-weight:800;color:var(--success)">● connected to the live API</span>
+      <div style="font-size:14.5px;font-weight:800">Students per department</div>
+      <div style="font-size:11.5px;color:var(--text-faint);margin-top:3px;margin-bottom:16px">Live count, grouped from real student records</div>
+      @if (departmentBreakdown.length === 0) {
+        <div style="font-size:12.5px;color:var(--text-faint)">No students yet.</div>
+      } @else {
+        <div style="display:flex;flex-direction:column;gap:13px">
+          @for (d of departmentBreakdown; track d.name) {
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
+                <span style="font-weight:700">{{ d.name }}</span>
+                <span class="mono" style="color:var(--text-faint)">{{ d.count }}</span>
+              </div>
+              <div style="height:8px;border-radius:5px;background:#f1f2f8;overflow:hidden">
+                <div [style.width.%]="d.pct" style="height:100%;background:var(--blue);border-radius:5px"></div>
+              </div>
+            </div>
+          }
         </div>
-        @for (m of ['Departments', 'Courses', 'Instructors', 'Enrollments']; track m) {
-          <div style="display:flex;justify-content:space-between;align-items:center;font-size:12.5px">
-            <span style="color:var(--text-muted)">{{ m }}</span>
-            <span style="font-weight:800;color:var(--text-disabled)">● UI ready, mock data</span>
-          </div>
-        }
-      </div>
+      }
     </section>
     <section class="card" style="padding:20px">
       <div style="font-size:14.5px;font-weight:800;margin-bottom:15px">Quick links</div>

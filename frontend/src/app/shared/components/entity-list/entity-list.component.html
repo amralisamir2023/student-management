@@ -23,8 +23,14 @@
     @for (fl of config.filters; track fl.key) {
       <select [(ngModel)]="filterValues[fl.key]" (ngModelChange)="onFilterChange()" style="height:40px;flex:none;border:1px solid var(--border);border-radius:11px;background:#fff;padding:0 12px;font-size:13px;min-width:160px;font-weight:600">
         <option value="">{{ fl.label }}</option>
-        @for (opt of fl.options; track opt) {
-          <option [value]="opt">{{ opt }}</option>
+        @if (resolvedFilterOptions[fl.key]; as liveOptions) {
+          @for (opt of liveOptions; track opt.value) {
+            <option [value]="opt.value">{{ opt.label }}</option>
+          }
+        } @else {
+          @for (opt of fl.options; track opt) {
+            <option [value]="opt">{{ opt }}</option>
+          }
         }
       </select>
     }

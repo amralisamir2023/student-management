@@ -21,7 +21,7 @@ export const INSTRUCTORS_CONFIG: ModuleConfig<Instructor> = {
     { key: 'name', label: 'Full name', type: 'text', placeholder: 'Dr. Hana Fouad', required: true },
     { key: 'email', label: 'Email', type: 'email', placeholder: 'name@nti.edu', required: true },
     { key: 'phone', label: 'Phone', type: 'text', placeholder: '010 0000 0000' },
-    { key: 'specialization', label: 'Specialization', type: 'select', required: true, options: SPECS.map((s) => ({ label: s, value: s })) },
+    { key: 'specialization', label: 'Specialization', type: 'select', options: SPECS.map((s) => ({ label: s, value: s })) },
   ],
   initials: (i) =>
     i.name
