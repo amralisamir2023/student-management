@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FieldConfig, SelectOption } from '../../../core/config/module-config.model';
+import { LucideX } from '../../icons';
 
 @Component({
   selector: 'app-entity-form-modal',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, LucideX],
   template: `
     <div class="modal-backdrop" (click)="cancel.emit()">
       <div class="modal-box" (click)="$event.stopPropagation()">
@@ -14,7 +15,7 @@ import { FieldConfig, SelectOption } from '../../../core/config/module-config.mo
             <div style="font-size:16.5px;font-weight:800;letter-spacing:-.02em">{{ title }}</div>
             <div style="font-size:11.5px;color:var(--text-faint);margin-top:4px" class="mono">{{ subtitle }}</div>
           </div>
-          <button (click)="cancel.emit()" style="width:32px;height:32px;flex:none;border:none;background:#f4f5fa;border-radius:10px;font-size:15px" title="Close">✕</button>
+          <button (click)="cancel.emit()" style="width:32px;height:32px;flex:none;border:none;background:#f4f5fa;border-radius:10px;display:flex;align-items:center;justify-content:center" title="Close"><svg lucideX [size]="15"></svg></button>
         </div>
 
         <div style="padding:22px 24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">

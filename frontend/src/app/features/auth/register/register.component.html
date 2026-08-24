@@ -1,7 +1,9 @@
 <div style="min-height:100vh;display:flex;background:#fff">
   <div data-auth-aside style="width:44%;max-width:520px;flex:none;background:var(--navy);color:#fff;padding:48px 46px;display:flex;flex-direction:column;justify-content:space-between">
     <div style="display:flex;align-items:center;gap:12px">
-      <div style="width:38px;height:38px;border-radius:11px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:18px">🎓</div>
+      <div style="width:38px;height:38px;border-radius:11px;background:var(--blue);display:flex;align-items:center;justify-content:center">
+        <svg lucideGraduationCap [size]="20" color="#fff"></svg>
+      </div>
       <div style="font-size:15px;font-weight:800;letter-spacing:-.01em">Student Management System</div>
     </div>
     <div>
@@ -11,7 +13,9 @@
       <div style="display:flex;flex-direction:column;gap:14px;margin-top:30px">
         @for (p of ['Pick "admin" to add, edit and delete records.', 'Pick "user" for a signed-in, read-only account.', 'You can always browse as a guest without an account.']; track p) {
           <div style="display:flex;gap:11px;align-items:flex-start">
-            <div style="width:19px;height:19px;flex:none;margin-top:1px;border-radius:50%;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-size:10px">✓</div>
+            <div style="width:19px;height:19px;flex:none;margin-top:1px;border-radius:50%;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center">
+              <svg lucideCheck [size]="11" color="#a7b6ff"></svg>
+            </div>
             <span style="font-size:13.5px;line-height:1.6;color:rgba(255,255,255,.78)">{{ p }}</span>
           </div>
         }
@@ -27,7 +31,7 @@
 
       @if (error) {
         <div style="margin-top:20px;display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:11px;background:var(--danger-bg);border:1px solid var(--danger-border)">
-          <span style="color:var(--danger)">⚠</span>
+          <svg lucideAlertCircle [size]="16" style="color:var(--danger);flex:none"></svg>
           <span style="font-size:12.5px;line-height:1.55;color:var(--danger);font-weight:600">{{ error }}</span>
         </div>
       }

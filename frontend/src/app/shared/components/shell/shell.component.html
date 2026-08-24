@@ -2,7 +2,9 @@
 
   <aside data-sidebar style="width:252px;flex:none;background:var(--navy);color:#fff;display:flex;flex-direction:column;position:sticky;top:0;height:100vh">
     <div data-brand style="padding:24px 22px;display:flex;gap:12px;align-items:center;border-bottom:1px solid rgba(255,255,255,.1)">
-      <div style="width:36px;height:36px;flex:none;border-radius:11px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:17px">🎓</div>
+      <div style="width:36px;height:36px;flex:none;border-radius:11px;background:var(--blue);display:flex;align-items:center;justify-content:center">
+        <svg lucideGraduationCap [size]="19" color="#fff"></svg>
+      </div>
       <div data-brand-text>
         <div style="font-size:13.5px;font-weight:800;line-height:1.3;letter-spacing:-.01em">Student Management<br>System</div>
       </div>
@@ -15,7 +17,7 @@
           [routerLinkActiveOptions]="{ exact: false }"
           style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:11px;color:rgba(255,255,255,.68);font-size:13.5px;font-weight:600"
         >
-          <span style="flex:none;font-size:15px">{{ item.icon }}</span>
+          <svg [lucideIcon]="item.icon" [size]="17" style="flex:none"></svg>
           <span data-nav-label>{{ item.label }}</span>
         </a>
       }
@@ -51,7 +53,9 @@
             <div style="font-size:12.5px;font-weight:700">{{ user.name }}</div>
             <div style="font-size:11px;color:var(--text-faint)">{{ user.role }}</div>
           </div>
-          <button (click)="logout()" title="Sign out" class="btn-outline" style="width:32px;height:32px;border:none;background:transparent;border-radius:9px;color:var(--text-faint)">⏻</button>
+          <button (click)="logout()" title="Sign out" class="btn-outline" style="width:32px;height:32px;border:none;background:transparent;border-radius:9px;color:var(--text-faint);display:flex;align-items:center;justify-content:center">
+            <svg lucideLogOut [size]="16"></svg>
+          </button>
         </div>
       } @else {
         <a routerLink="/login" class="btn btn-primary">Sign in</a>

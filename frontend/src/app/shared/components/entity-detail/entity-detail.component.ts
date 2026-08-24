@@ -6,11 +6,12 @@ import { ModuleRegistryService } from '../../../core/services/module-registry.se
 import { ModuleConfig } from '../../../core/config/module-config.model';
 import { EntityFormModalComponent } from '../entity-form-modal/entity-form-modal.component';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
+import { LucideChevronLeft, LucideLock } from '../../icons';
 
 @Component({
   selector: 'app-entity-detail',
   standalone: true,
-  imports: [EntityFormModalComponent, ConfirmModalComponent],
+  imports: [EntityFormModalComponent, ConfirmModalComponent, LucideChevronLeft, LucideLock],
   templateUrl: './entity-detail.component.html',
 })
 export class EntityDetailComponent implements OnInit {

@@ -2,7 +2,9 @@
   @for (s of stats; track s.label) {
     <div class="card" style="padding:18px;display:flex;flex-direction:column;gap:16px">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
-        <div style="width:38px;height:38px;border-radius:11px;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;font-size:17px">{{ s.icon }}</div>
+        <div style="width:38px;height:38px;border-radius:11px;background:var(--blue-soft);display:flex;align-items:center;justify-content:center">
+          <svg [lucideIcon]="s.icon" [size]="18" color="#4f6df5"></svg>
+        </div>
         @if (s.live) {
           <span style="font-size:11px;font-weight:700;color:var(--success);background:var(--success-bg);border-radius:20px;padding:4px 10px">live</span>
         }

@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { LucideGraduationCap, LucideCheck, LucideAlertCircle, LucideEye } from '../../../shared/icons';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule, RouterLink, LucideGraduationCap, LucideCheck, LucideAlertCircle, LucideEye],
   templateUrl: './login.component.html',
 })
 export class LoginComponent {

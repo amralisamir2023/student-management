@@ -2,7 +2,7 @@
 
   @if (isGuestBrowsing) {
     <div style="display:flex;gap:11px;align-items:center;padding:12px 16px;border-radius:12px;background:var(--blue-soft);border:1px solid #d3daff">
-      <span style="color:var(--indigo);font-weight:800">i</span>
+      <svg lucideLock [size]="17" style="color:var(--indigo);flex:none"></svg>
       <span style="font-size:12.5px;color:var(--indigo);font-weight:600;line-height:1.5">
         You are browsing as a guest. Records are visible, but add, edit and delete are locked
         @if (!auth.isLoggedIn()) { — <a routerLink="/login" style="font-weight:800">sign in as admin</a> to make changes. }
@@ -30,15 +30,15 @@
     }
     <div style="flex:1"></div>
     @if (canEdit) {
-      <button class="btn btn-primary" (click)="openAdd()">+ {{ config.addLabel }}</button>
+      <button class="btn btn-primary" (click)="openAdd()"><svg lucidePlus [size]="15"></svg>{{ config.addLabel }}</button>
     } @else {
-      <span class="btn btn-disabled" title="Sign in as admin to add records">🔒 {{ config.addLabel }}</span>
+      <span class="btn btn-disabled" title="Sign in as admin to add records"><svg lucideLock [size]="14"></svg>{{ config.addLabel }}</span>
     }
   </div>
 
   @if (loadFailed) {
     <div style="display:flex;gap:12px;align-items:center;padding:16px 18px;border-radius:13px;background:var(--danger-bg);border:1px solid var(--danger-border)">
-      <span style="color:var(--danger);font-size:18px">⚠</span>
+      <svg lucideAlertCircle [size]="19" style="color:var(--danger);flex:none"></svg>
       <div style="flex:1">
         <div style="font-size:13px;font-weight:800;color:var(--danger)">Could not load {{ config.title.toLowerCase() }}</div>
         <div class="mono" style="font-size:12px;color:#b4614d;margin-top:3px">GET /api/{{ moduleKey }} — request failed</div>
@@ -53,7 +53,9 @@
     </div>
   } @else if (items.length === 0) {
     <div class="card" style="padding:64px 24px;text-align:center">
-      <div style="width:50px;height:50px;margin:0 auto 16px;border-radius:14px;background:var(--page-bg);display:flex;align-items:center;justify-content:center;font-size:22px">📭</div>
+      <div style="width:50px;height:50px;margin:0 auto 16px;border-radius:14px;background:var(--page-bg);display:flex;align-items:center;justify-content:center">
+        <svg lucideInbox [size]="23" style="color:var(--text-disabled)"></svg>
+      </div>
       <div style="font-size:15.5px;font-weight:800">No {{ config.title.toLowerCase() }} yet</div>
       <div style="font-size:13px;color:var(--text-muted);margin:7px auto 18px;max-width:340px;line-height:1.6">
         Nothing matches your search or filters right now.
@@ -86,7 +88,7 @@
               <button class="btn btn-outline btn-sm" (click)="openEdit(item, $event)">Edit</button>
               <button class="btn btn-danger btn-sm" (click)="askDelete(item, $event)">Delete</button>
             } @else {
-              <span style="font-size:11.5px;font-weight:700;color:var(--text-disabled)">🔒 Admin only</span>
+              <span style="font-size:11.5px;font-weight:700;color:var(--text-disabled);display:inline-flex;align-items:center;gap:6px"><svg lucideLock [size]="12"></svg>Admin only</span>
             }
           </div>
         </div>
@@ -130,12 +132,12 @@
                 }
                 <td class="th-right" style="text-align:right;white-space:nowrap" (click)="$event.stopPropagation()">
                   <div style="display:inline-flex;gap:6px;align-items:center">
-                    <button class="icon-btn" title="View" (click)="viewItem(item)">👁</button>
+                    <button class="icon-btn" title="View" (click)="viewItem(item)"><svg lucideEye [size]="15"></svg></button>
                     @if (canEdit) {
-                      <button class="icon-btn" title="Edit" (click)="openEdit(item, $event)">✎</button>
-                      <button class="icon-btn icon-btn-danger" title="Delete" (click)="askDelete(item, $event)" style="color:var(--danger)">🗑</button>
+                      <button class="icon-btn" title="Edit" (click)="openEdit(item, $event)"><svg lucidePencil [size]="15"></svg></button>
+                      <button class="icon-btn icon-btn-danger" title="Delete" (click)="askDelete(item, $event)" style="color:var(--danger)"><svg lucideTrash2 [size]="15"></svg></button>
                     } @else {
-                      <span class="icon-btn" title="Sign in as admin to edit" style="color:var(--text-disabled);cursor:not-allowed">🔒</span>
+                      <span class="icon-btn" title="Sign in as admin to edit" style="color:var(--text-disabled);cursor:not-allowed"><svg lucideLock [size]="14"></svg></span>
                     }
                   </div>
                 </td>

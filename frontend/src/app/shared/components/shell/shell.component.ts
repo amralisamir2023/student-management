@@ -2,26 +2,37 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterOutlet, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { ToastContainerComponent } from '../toast-container/toast-container.component';
+import {
+  LucideDynamicIcon,
+  LucideGraduationCap,
+  LucideLogOut,
+  LucideLayoutDashboard,
+  LucideUsers,
+  LucideBuilding2,
+  LucideBookOpen,
+  LucideClipboardCheck,
+  type LucideIcon,
+} from '../../icons';
 
 interface NavItem {
   label: string;
   path: string;
-  icon: string;
+  icon: LucideIcon;
 }
 
 const NAV: NavItem[] = [
-  { label: 'Dashboard', path: '/dashboard', icon: '▦' },
-  { label: 'Students', path: '/students', icon: '🎓' },
-  { label: 'Departments', path: '/departments', icon: '🏛' },
-  { label: 'Courses', path: '/courses', icon: '📘' },
-  { label: 'Instructors', path: '/instructors', icon: '🧑‍🏫' },
-  { label: 'Enrollments', path: '/enrollments', icon: '✅' },
+  { label: 'Dashboard', path: '/dashboard', icon: LucideLayoutDashboard },
+  { label: 'Students', path: '/students', icon: LucideUsers },
+  { label: 'Departments', path: '/departments', icon: LucideBuilding2 },
+  { label: 'Courses', path: '/courses', icon: LucideBookOpen },
+  { label: 'Instructors', path: '/instructors', icon: LucideGraduationCap },
+  { label: 'Enrollments', path: '/enrollments', icon: LucideClipboardCheck },
 ];
 
 @Component({
   selector: 'app-shell',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, ToastContainerComponent],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, ToastContainerComponent, LucideDynamicIcon, LucideGraduationCap, LucideLogOut],
   templateUrl: './shell.component.html',
 })
 export class ShellComponent {

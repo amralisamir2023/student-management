@@ -1,13 +1,17 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { LucideAlertTriangle } from '../../icons';
 
 @Component({
   selector: 'app-confirm-modal',
   standalone: true,
+  imports: [LucideAlertTriangle],
   template: `
     <div class="modal-backdrop" (click)="cancel.emit()">
       <div class="modal-box" style="max-width:420px" (click)="$event.stopPropagation()">
         <div style="padding:22px 24px;display:flex;gap:15px;align-items:flex-start">
-          <div style="width:40px;height:40px;flex:none;border-radius:12px;background:var(--danger-bg);display:flex;align-items:center;justify-content:center;color:var(--danger);font-size:18px">!</div>
+          <div style="width:40px;height:40px;flex:none;border-radius:12px;background:var(--danger-bg);display:flex;align-items:center;justify-content:center;color:var(--danger)">
+            <svg lucideAlertTriangle [size]="20"></svg>
+          </div>
           <div>
             <div style="font-size:15.5px;font-weight:800">Delete {{ title }}?</div>
             <div style="font-size:12.5px;color:var(--text-muted);margin-top:6px;line-height:1.6">

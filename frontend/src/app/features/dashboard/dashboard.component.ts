@@ -5,18 +5,27 @@ import { DepartmentService } from '../../core/services/department.service';
 import { CourseService } from '../../core/services/course.service';
 import { InstructorService } from '../../core/services/instructor.service';
 import { EnrollmentService } from '../../core/services/enrollment.service';
+import {
+  LucideDynamicIcon,
+  LucideUsers,
+  LucideBuilding2,
+  LucideBookOpen,
+  LucideGraduationCap,
+  LucideClipboardCheck,
+  type LucideIcon,
+} from '../../shared/icons';
 
 interface StatCard {
   label: string;
   value: string;
-  icon: string;
+  icon: LucideIcon;
   live: boolean;
 }
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, LucideDynamicIcon],
   templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
@@ -27,11 +36,11 @@ export class DashboardComponent implements OnInit {
   private enrollments = inject(EnrollmentService);
 
   stats: StatCard[] = [
-    { label: 'Students', value: '—', icon: '🎓', live: true },
-    { label: 'Departments', value: '—', icon: '🏛', live: false },
-    { label: 'Courses', value: '—', icon: '📘', live: false },
-    { label: 'Instructors', value: '—', icon: '🧑‍🏫', live: false },
-    { label: 'Enrollments', value: '—', icon: '✅', live: false },
+    { label: 'Students', value: '—', icon: LucideUsers, live: true },
+    { label: 'Departments', value: '—', icon: LucideBuilding2, live: false },
+    { label: 'Courses', value: '—', icon: LucideBookOpen, live: false },
+    { label: 'Instructors', value: '—', icon: LucideGraduationCap, live: false },
+    { label: 'Enrollments', value: '—', icon: LucideClipboardCheck, live: false },
   ];
 
   recentEnrollments: { student: string; course: string; status: string; grade: string; badgeClass: string }[] = [];

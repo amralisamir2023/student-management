@@ -1,6 +1,7 @@
 <div>
   <a (click)="backToList()" style="display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;margin-bottom:16px;cursor:pointer">
-    ← Back to {{ config.title }}
+    <svg lucideChevronLeft [size]="14"></svg>
+    Back to {{ config.title }}
   </a>
 
   @if (loading) {
@@ -31,7 +32,7 @@
             <button class="btn btn-outline" (click)="openEdit()">Edit</button>
             <button class="btn btn-danger" (click)="askDelete()">Delete</button>
           } @else {
-            <span class="btn btn-disabled">🔒 Admin only</span>
+            <span class="btn btn-disabled"><svg lucideLock [size]="14"></svg>Admin only</span>
           }
         </div>
       </div>

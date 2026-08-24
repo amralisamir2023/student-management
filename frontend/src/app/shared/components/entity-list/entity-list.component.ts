@@ -7,11 +7,24 @@ import { ModuleRegistryService } from '../../../core/services/module-registry.se
 import { ModuleConfig } from '../../../core/config/module-config.model';
 import { EntityFormModalComponent } from '../entity-form-modal/entity-form-modal.component';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
+import { LucidePlus, LucideLock, LucideAlertCircle, LucideInbox, LucideEye, LucidePencil, LucideTrash2 } from '../../icons';
 
 @Component({
   selector: 'app-entity-list',
   standalone: true,
-  imports: [FormsModule, RouterLink, EntityFormModalComponent, ConfirmModalComponent],
+  imports: [
+    FormsModule,
+    RouterLink,
+    EntityFormModalComponent,
+    ConfirmModalComponent,
+    LucidePlus,
+    LucideLock,
+    LucideAlertCircle,
+    LucideInbox,
+    LucideEye,
+    LucidePencil,
+    LucideTrash2,
+  ],
   templateUrl: './entity-list.component.html',
 })
 export class EntityListComponent implements OnInit {
