@@ -13,9 +13,13 @@ const STATUSES: { label: string; value: Enrollment['status'] }[] = [
   { label: 'Dropped', value: 'dropped' },
 ];
 
+// populate() returns null (not the id) when the referenced document was
+// deleted without cascading — the backend now cascades deletes for
+// Students and Courses, so this is mainly a safety net for old data or
+// records created directly through the API.
 function studentLabel(e: Enrollment): string {
   const s = e.studentId as Student;
-  return s && typeof s === 'object' ? s.name : e.studentId ? String(e.studentId) : '—';
+  return s && typeof s === 'object' ? s.name : e.studentId ? String(e.studentId) : 'Deleted student';
 }
 
 function studentIdValue(e: Enrollment): string {
@@ -25,7 +29,7 @@ function studentIdValue(e: Enrollment): string {
 
 function courseLabel(e: Enrollment): string {
   const c = e.courseId as Course;
-  return c && typeof c === 'object' ? `${c.name} (${c.code})` : e.courseId ? String(e.courseId) : '—';
+  return c && typeof c === 'object' ? `${c.name} (${c.code})` : e.courseId ? String(e.courseId) : 'Deleted course';
 }
 
 function courseIdValue(e: Enrollment): string {

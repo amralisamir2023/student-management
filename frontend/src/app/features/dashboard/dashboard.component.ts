@@ -73,8 +73,8 @@ export class DashboardComponent implements OnInit {
         const student = e.studentId as any;
         const course = e.courseId as any;
         return {
-          student: student && typeof student === 'object' ? student.name : String(student ?? '—'),
-          course: course && typeof course === 'object' ? course.name : String(course ?? '—'),
+          student: student && typeof student === 'object' ? student.name : student ? String(student) : 'Deleted student',
+          course: course && typeof course === 'object' ? course.name : course ? String(course) : 'Deleted course',
           status: e.status[0].toUpperCase() + e.status.slice(1),
           grade: e.grade != null ? String(e.grade) : '—',
           badgeClass: `badge badge-${e.status}`,

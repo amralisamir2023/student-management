@@ -1,4 +1,5 @@
 const Course = require('../models/Course');
+const Enrollment = require('../models/Enrollment');
 
 // @desc    Get all courses (with search, filtering and populate)
 // @route   GET /api/courses
@@ -161,6 +162,10 @@ const deleteCourse = async (req, res) => {
         data: null,
       });
     }
+
+    // Same reasoning as Student's cascade delete: without this, any
+    // enrollment pointing at this course would be left dangling.
+    await Enrollment.deleteMany({ courseId: req.params.id });
 
     return res.status(200).json({
       success: true,

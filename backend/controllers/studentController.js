@@ -1,4 +1,5 @@
 const Student = require('../models/Student');
+const Enrollment = require('../models/Enrollment');
 
 // @desc    Get all students (with search, filtering and populate)
 // @route   GET /api/students
@@ -161,6 +162,11 @@ const deleteStudent = async (req, res) => {
         data: null,
       });
     }
+
+    // Without this, any enrollment that pointed at this student would be
+    // left dangling — populate('studentId') would return null for it
+    // forever, showing up as a blank/"—" student in every enrollment list.
+    await Enrollment.deleteMany({ studentId: req.params.id });
 
     return res.status(200).json({
       success: true,
