@@ -1,30 +1,42 @@
-<div style="display:flex;min-height:100vh;align-items:stretch" [class.sidebar-open]="sidebarOpen()">
+<div class="flex min-h-screen items-stretch">
 
-  <div class="sidebar-backdrop" (click)="closeSidebar()"></div>
+  @if (sidebarOpen()) {
+    <div class="fixed inset-0 z-[65] bg-black/50 md:hidden" (click)="closeSidebar()"></div>
+  }
 
-  <aside data-sidebar style="width:252px;flex:none;background:var(--navy);color:#fff;display:flex;flex-direction:column;position:sticky;top:0;height:100vh">
-    <div data-brand style="padding:24px 22px;display:flex;gap:12px;align-items:center;border-bottom:1px solid rgba(255,255,255,.1)">
-      <div style="width:36px;height:36px;flex:none;border-radius:11px;background:var(--blue);display:flex;align-items:center;justify-content:center">
+  <aside
+    data-sidebar
+    class="flex flex-col flex-none fixed inset-y-0 left-0 z-[70] w-[250px] transition-transform duration-200 ease-out md:static md:z-auto md:w-[70px] lg:w-[252px]"
+    [class]="sidebarOpen() ? 'translate-x-0' : '-translate-x-full md:translate-x-0'"
+    style="background:var(--navy);color:#fff"
+  >
+    <div
+      data-brand
+      class="flex items-center gap-3 justify-start md:justify-center lg:justify-start px-[22px] py-6 md:px-0 md:py-5 lg:px-[22px] lg:py-6"
+      style="border-bottom:1px solid rgba(255,255,255,.1)"
+    >
+      <div class="flex items-center justify-center flex-none rounded-[11px]" style="width:36px;height:36px;background:var(--blue)">
         <svg lucideGraduationCap [size]="19" color="#fff"></svg>
       </div>
-      <div data-brand-text>
+      <div data-brand-text class="block md:hidden lg:block">
         <div style="font-size:13.5px;font-weight:800;line-height:1.3;letter-spacing:-.01em">Student Management<br>System</div>
       </div>
     </div>
-    <nav style="padding:14px 12px;display:flex;flex-direction:column;gap:3px">
+    <nav class="flex flex-col gap-[3px] px-3 py-3.5">
       @for (item of nav; track item.path) {
         <a
           [routerLink]="item.path"
           routerLinkActive="nav-active"
           [routerLinkActiveOptions]="{ exact: false }"
-          style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:11px;color:rgba(255,255,255,.68);font-size:13.5px;font-weight:600"
+          class="flex items-center gap-3 justify-start md:justify-center lg:justify-start rounded-[11px] px-3.5 py-2.5 md:px-0 md:py-3 lg:px-3.5 lg:py-2.5"
+          style="color:rgba(255,255,255,.68);font-size:13.5px;font-weight:600"
         >
-          <svg [lucideIcon]="item.icon" [size]="17" style="flex:none"></svg>
-          <span data-nav-label>{{ item.label }}</span>
+          <svg [lucideIcon]="item.icon" [size]="17" class="flex-none"></svg>
+          <span data-nav-label class="block md:hidden lg:block">{{ item.label }}</span>
         </a>
       }
     </nav>
-    <div data-side-foot style="margin-top:auto;padding:16px 20px;border-top:1px solid rgba(255,255,255,.1)">
+    <div data-side-foot class="mt-auto px-5 py-4 block md:hidden lg:block" style="border-top:1px solid rgba(255,255,255,.1)">
       <div style="padding:12px;border-radius:11px;background:rgba(255,255,255,.06)">
         @if (user) {
           <div style="font-size:11.5px;font-weight:700;color:rgba(255,255,255,.9)">Signed in as {{ user.role }}</div>
@@ -40,29 +52,38 @@
     </div>
   </aside>
 
-  <div style="flex:1;min-width:0;display:flex;flex-direction:column">
-    <header style="height:70px;flex:none;background:var(--card-bg);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;padding:0 26px;position:sticky;top:0;z-index:20">
-      <button data-hamburger (click)="toggleSidebar()" title="Menu" style="width:36px;height:36px;flex:none;border:1px solid var(--border);background:var(--card-bg);border-radius:10px;align-items:center;justify-content:center;color:var(--text)">
+  <div class="flex flex-1 min-w-0 flex-col">
+    <header
+      class="sticky top-0 z-20 flex h-[70px] flex-none items-center gap-2.5 md:gap-4 px-3.5 md:px-[26px]"
+      style="background:var(--card-bg);border-bottom:1px solid var(--border)"
+    >
+      <button
+        data-hamburger
+        (click)="toggleSidebar()"
+        title="Menu"
+        class="md:hidden flex h-9 w-9 flex-none items-center justify-center rounded-[10px]"
+        style="border:1px solid var(--border);background:var(--card-bg);color:var(--text)"
+      >
         @if (sidebarOpen()) { <svg lucideX [size]="17"></svg> } @else { <svg lucideMenu [size]="17"></svg> }
       </button>
-      <div style="min-width:0">
+      <div class="min-w-0">
         <div style="font-size:17.5px;font-weight:800;letter-spacing:-.02em;line-height:1.2">{{ pageTitle }}</div>
-        <div class="mono" style="font-size:11.5px;color:var(--text-faint);margin-top:3px">Student Management System</div>
+        <div class="mono hidden sm:block" style="font-size:11.5px;color:var(--text-faint);margin-top:3px">Student Management System</div>
       </div>
-      <div style="flex:1"></div>
+      <div class="flex-1"></div>
 
       <button class="theme-toggle" (click)="theme.toggle()" [title]="theme.isDark() ? 'Switch to light mode' : 'Switch to dark mode'">
         @if (theme.isDark()) { <svg lucideSun [size]="17"></svg> } @else { <svg lucideMoon [size]="17"></svg> }
       </button>
 
       @if (user) {
-        <div style="display:flex;align-items:center;gap:10px;padding-inline-start:16px;border-inline-start:1px solid var(--border-soft)">
-          <div style="width:34px;height:34px;border-radius:50%;background:var(--blue-soft);color:var(--indigo);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ initials }}</div>
-          <div data-profile-text style="line-height:1.3">
+        <div class="flex items-center gap-2.5 ps-4" style="border-inline-start:1px solid var(--border-soft)">
+          <div class="flex h-[34px] w-[34px] flex-none items-center justify-center rounded-full" style="background:var(--blue-soft);color:var(--indigo);font-size:12px;font-weight:800">{{ initials }}</div>
+          <div data-profile-text class="hidden sm:block" style="line-height:1.3">
             <div style="font-size:12.5px;font-weight:700">{{ user.name }}</div>
             <div style="font-size:11px;color:var(--text-faint)">{{ user.role }}</div>
           </div>
-          <button (click)="logout()" title="Sign out" class="btn-outline" style="width:32px;height:32px;border:none;background:transparent;border-radius:9px;color:var(--text-faint);display:flex;align-items:center;justify-content:center">
+          <button (click)="logout()" title="Sign out" class="flex h-8 w-8 flex-none items-center justify-center rounded-[9px]" style="border:none;background:transparent;color:var(--text-faint)">
             <svg lucideLogOut [size]="16"></svg>
           </button>
         </div>
@@ -71,7 +92,7 @@
       }
     </header>
 
-    <main style="flex:1;padding:24px 26px 40px;display:flex;flex-direction:column;gap:20px;max-width:1420px;width:100%">
+    <main class="flex flex-1 flex-col gap-5 px-3.5 py-4 pb-8 md:px-[26px] md:py-6 md:pb-10" style="max-width:1420px;width:100%">
       <router-outlet></router-outlet>
     </main>
   </div>
