@@ -24,6 +24,9 @@ export {
   LucideAlertTriangle,
   LucideX,
   LucideInbox,
+  LucideMenu,
+  LucideSun,
+  LucideMoon,
   LucideDynamicIcon,
   type LucideIcon,
 } from '@lucide/angular';

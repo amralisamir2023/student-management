@@ -1,4 +1,6 @@
-<div style="display:flex;min-height:100vh;align-items:stretch">
+<div style="display:flex;min-height:100vh;align-items:stretch" [class.sidebar-open]="sidebarOpen()">
+
+  <div class="sidebar-backdrop" (click)="closeSidebar()"></div>
 
   <aside data-sidebar style="width:252px;flex:none;background:var(--navy);color:#fff;display:flex;flex-direction:column;position:sticky;top:0;height:100vh">
     <div data-brand style="padding:24px 22px;display:flex;gap:12px;align-items:center;border-bottom:1px solid rgba(255,255,255,.1)">
@@ -39,12 +41,19 @@
   </aside>
 
   <div style="flex:1;min-width:0;display:flex;flex-direction:column">
-    <header style="height:70px;flex:none;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;padding:0 26px;position:sticky;top:0;z-index:20">
+    <header style="height:70px;flex:none;background:var(--card-bg);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;padding:0 26px;position:sticky;top:0;z-index:20">
+      <button data-hamburger (click)="toggleSidebar()" title="Menu" style="width:36px;height:36px;flex:none;border:1px solid var(--border);background:var(--card-bg);border-radius:10px;align-items:center;justify-content:center;color:var(--text)">
+        @if (sidebarOpen()) { <svg lucideX [size]="17"></svg> } @else { <svg lucideMenu [size]="17"></svg> }
+      </button>
       <div style="min-width:0">
         <div style="font-size:17.5px;font-weight:800;letter-spacing:-.02em;line-height:1.2">{{ pageTitle }}</div>
         <div class="mono" style="font-size:11.5px;color:var(--text-faint);margin-top:3px">Student Management System</div>
       </div>
       <div style="flex:1"></div>
+
+      <button class="theme-toggle" (click)="theme.toggle()" [title]="theme.isDark() ? 'Switch to light mode' : 'Switch to dark mode'">
+        @if (theme.isDark()) { <svg lucideSun [size]="17"></svg> } @else { <svg lucideMoon [size]="17"></svg> }
+      </button>
 
       @if (user) {
         <div style="display:flex;align-items:center;gap:10px;padding-inline-start:16px;border-inline-start:1px solid var(--border-soft)">

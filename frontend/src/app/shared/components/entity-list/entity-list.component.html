@@ -1,7 +1,7 @@
 <div style="display:flex;flex-direction:column;gap:20px">
 
   @if (isGuestBrowsing) {
-    <div style="display:flex;gap:11px;align-items:center;padding:12px 16px;border-radius:12px;background:var(--blue-soft);border:1px solid #d3daff">
+    <div style="display:flex;gap:11px;align-items:center;padding:12px 16px;border-radius:12px;background:var(--blue-soft);border:1px solid rgba(79,109,245,.3)">
       <svg lucideLock [size]="17" style="color:var(--indigo);flex:none"></svg>
       <span style="font-size:12.5px;color:var(--indigo);font-weight:600;line-height:1.5">
         You are browsing as a guest. Records are visible, but add, edit and delete are locked
@@ -11,17 +11,18 @@
   }
 
   <div style="display:flex;align-items:center;gap:11px;flex-wrap:wrap">
-    <div style="position:relative;flex:1;min-width:200px;max-width:320px">
+    <div style="position:relative;flex:1;min-width:180px;max-width:320px">
+      <svg lucideSearch [size]="15" style="position:absolute;inset-inline-start:12px;top:12px;color:var(--text-faintest);pointer-events:none"></svg>
       <input
         type="text"
         [placeholder]="config.searchPlaceholder"
         [(ngModel)]="search"
         (ngModelChange)="onSearchChange()"
-        style="width:100%"
+        style="width:100%;height:40px;border:1px solid var(--border);border-radius:11px;background:var(--card-bg);color:var(--text);padding-inline-start:34px;padding-inline-end:12px;font-size:13px"
       />
     </div>
     @for (fl of config.filters; track fl.key) {
-      <select [(ngModel)]="filterValues[fl.key]" (ngModelChange)="onFilterChange()" style="height:40px;flex:none;border:1px solid var(--border);border-radius:11px;background:#fff;padding:0 12px;font-size:13px;min-width:160px;font-weight:600">
+      <select [(ngModel)]="filterValues[fl.key]" (ngModelChange)="onFilterChange()" style="height:40px;flex:none;border:1px solid var(--border);border-radius:11px;background:var(--card-bg);color:var(--text);padding:0 12px;font-size:13px;min-width:160px;font-weight:600">
         <option value="">{{ fl.label }}</option>
         @if (resolvedFilterOptions[fl.key]; as liveOptions) {
           @for (opt of liveOptions; track opt.value) {
@@ -47,7 +48,7 @@
       <svg lucideAlertCircle [size]="19" style="color:var(--danger);flex:none"></svg>
       <div style="flex:1">
         <div style="font-size:13px;font-weight:800;color:var(--danger)">Could not load {{ config.title.toLowerCase() }}</div>
-        <div class="mono" style="font-size:12px;color:#b4614d;margin-top:3px">GET /api/{{ moduleKey }} — request failed</div>
+        <div class="mono" style="font-size:12px;color:var(--danger);margin-top:3px;opacity:.85">GET /api/{{ moduleKey }} — request failed</div>
       </div>
       <button class="btn btn-outline btn-sm" (click)="fetch()">Retry</button>
     </div>
@@ -152,7 +153,7 @@
           </tbody>
         </table>
       </div>
-      <div style="padding:14px 20px;border-top:1px solid var(--border-soft);background:#fbfbfe">
+      <div style="padding:14px 20px;border-top:1px solid var(--border-soft);background:var(--surface-alt)">
         <span style="font-size:12px;color:var(--text-faint)">{{ items.length }} result{{ items.length === 1 ? '' : 's' }}</span>
       </div>
     </section>

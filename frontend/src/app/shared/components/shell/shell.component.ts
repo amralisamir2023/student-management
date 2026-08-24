@@ -1,6 +1,8 @@
-import { Component, inject } from '@angular/core';
-import { Router, RouterLink, RouterOutlet, RouterLinkActive } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+import { NavigationEnd, Router, RouterLink, RouterOutlet, RouterLinkActive } from '@angular/router';
+import { filter } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
+import { ThemeService } from '../../../core/services/theme.service';
 import { ToastContainerComponent } from '../toast-container/toast-container.component';
 import {
   LucideDynamicIcon,
@@ -11,6 +13,10 @@ import {
   LucideBuilding2,
   LucideBookOpen,
   LucideClipboardCheck,
+  LucideMenu,
+  LucideX,
+  LucideSun,
+  LucideMoon,
   type LucideIcon,
 } from '../../icons';
 
@@ -32,14 +38,35 @@ const NAV: NavItem[] = [
 @Component({
   selector: 'app-shell',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, ToastContainerComponent, LucideDynamicIcon, LucideGraduationCap, LucideLogOut],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    ToastContainerComponent,
+    LucideDynamicIcon,
+    LucideGraduationCap,
+    LucideLogOut,
+    LucideMenu,
+    LucideX,
+    LucideSun,
+    LucideMoon,
+  ],
   templateUrl: './shell.component.html',
 })
 export class ShellComponent {
   private auth = inject(AuthService);
   private router = inject(Router);
+  theme = inject(ThemeService);
 
   nav = NAV;
+  // Off-canvas nav drawer state — only relevant below the mobile breakpoint
+  // (see [data-hamburger] / [data-sidebar] rules in styles.css), harmless
+  // on larger screens where the sidebar is always visible regardless.
+  sidebarOpen = signal(false);
+
+  constructor() {
+    this.router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe(() => this.sidebarOpen.set(false));
+  }
 
   get user() {
     return this.auth.currentUser();
@@ -60,6 +87,14 @@ export class ShellComponent {
       .map((w) => w[0])
       .join('')
       .toUpperCase();
+  }
+
+  toggleSidebar(): void {
+    this.sidebarOpen.update((v) => !v);
+  }
+
+  closeSidebar(): void {
+    this.sidebarOpen.set(false);
   }
 
   logout(): void {

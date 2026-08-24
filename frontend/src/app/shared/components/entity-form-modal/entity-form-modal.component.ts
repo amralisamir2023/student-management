@@ -15,10 +15,10 @@ import { LucideX } from '../../icons';
             <div style="font-size:16.5px;font-weight:800;letter-spacing:-.02em">{{ title }}</div>
             <div style="font-size:11.5px;color:var(--text-faint);margin-top:4px" class="mono">{{ subtitle }}</div>
           </div>
-          <button (click)="cancel.emit()" style="width:32px;height:32px;flex:none;border:none;background:#f4f5fa;border-radius:10px;display:flex;align-items:center;justify-content:center" title="Close"><svg lucideX [size]="15"></svg></button>
+          <button (click)="cancel.emit()" style="width:32px;height:32px;flex:none;border:none;background:var(--surface-alt);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--text)" title="Close"><svg lucideX [size]="15"></svg></button>
         </div>
 
-        <div style="padding:22px 24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">
+        <div class="form-grid" style="padding:22px 24px;gap:16px">
           @for (f of fields; track f.key) {
             <label class="field" [style.grid-column]="f.full ? '1 / -1' : 'auto'">
               <span class="field-label">{{ f.label }}@if (f.required) {<span style="color:var(--danger)"> *</span>}</span>
@@ -52,7 +52,7 @@ import { LucideX } from '../../icons';
           }
         </div>
 
-        <div style="padding:17px 24px;border-top:1px solid var(--border-soft);display:flex;justify-content:flex-end;gap:10px;background:#fbfbfe;border-radius:0 0 18px 18px">
+        <div style="padding:17px 24px;border-top:1px solid var(--border-soft);display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px;background:var(--surface-alt);border-radius:0 0 18px 18px">
           <button class="btn btn-outline" (click)="cancel.emit()">Cancel</button>
           <button class="btn btn-primary" (click)="onSubmit()">{{ submitLabel }}</button>
         </div>

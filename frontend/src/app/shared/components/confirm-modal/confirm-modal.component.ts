@@ -19,7 +19,7 @@ import { LucideAlertTriangle } from '../../icons';
             </div>
           </div>
         </div>
-        <div style="padding:17px 24px;border-top:1px solid var(--border-soft);display:flex;justify-content:flex-end;gap:10px;background:#fbfbfe;border-radius:0 0 18px 18px">
+        <div style="padding:17px 24px;border-top:1px solid var(--border-soft);display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px;background:var(--surface-alt);border-radius:0 0 18px 18px">
           <button class="btn btn-outline" (click)="cancel.emit()">Cancel</button>
           <button class="btn btn-danger" (click)="confirm.emit()">Delete</button>
         </div>

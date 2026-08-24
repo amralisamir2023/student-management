@@ -7,7 +7,7 @@ import { ModuleRegistryService } from '../../../core/services/module-registry.se
 import { ModuleConfig, SelectOption } from '../../../core/config/module-config.model';
 import { EntityFormModalComponent } from '../entity-form-modal/entity-form-modal.component';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
-import { LucidePlus, LucideLock, LucideAlertCircle, LucideInbox, LucideEye, LucidePencil, LucideTrash2 } from '../../icons';
+import { LucidePlus, LucideLock, LucideAlertCircle, LucideInbox, LucideEye, LucidePencil, LucideTrash2, LucideSearch } from '../../icons';
 
 @Component({
   selector: 'app-entity-list',
@@ -24,6 +24,7 @@ import { LucidePlus, LucideLock, LucideAlertCircle, LucideInbox, LucideEye, Luci
     LucideEye,
     LucidePencil,
     LucideTrash2,
+    LucideSearch,
   ],
   templateUrl: './entity-list.component.html',
 })
