@@ -1,8 +1,8 @@
-import { ModuleConfig } from './module-config.model';
-import { Student } from '../models/student.model';
-import { Department } from '../models/department.model';
-import { DepartmentService } from '../services/department.service';
-import { loadOptions } from './options-loader.util';
+import { ModuleConfig } from '../../core/config/module-config.model';
+import { Student } from './student.model';
+import { Department } from '../departments/department.model';
+import { DepartmentService } from '../departments/department.service';
+import { loadOptions } from '../../core/config/options-loader.util';
 
 function departmentName(s: Student): string {
   const d = s.departmentId as Department;

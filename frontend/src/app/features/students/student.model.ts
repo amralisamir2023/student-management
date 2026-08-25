@@ -1,4 +1,4 @@
-import { Department } from './department.model';
+import { Department } from '../departments/department.model';
 
 // departmentId comes back populated (a full Department object) on every read
 // from the real API, but must be sent as a plain department _id string on

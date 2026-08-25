@@ -1,10 +1,10 @@
-import { ModuleConfig } from './module-config.model';
-import { Course } from '../models/course.model';
-import { Department } from '../models/department.model';
-import { Instructor } from '../models/instructor.model';
-import { DepartmentService } from '../services/department.service';
-import { InstructorService } from '../services/instructor.service';
-import { loadOptions } from './options-loader.util';
+import { ModuleConfig } from '../../core/config/module-config.model';
+import { Course } from './course.model';
+import { Department } from '../departments/department.model';
+import { Instructor } from '../instructors/instructor.model';
+import { DepartmentService } from '../departments/department.service';
+import { InstructorService } from '../instructors/instructor.service';
+import { loadOptions } from '../../core/config/options-loader.util';
 
 function departmentName(c: Course): string {
   const d = c.departmentId as Department;

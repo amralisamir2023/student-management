@@ -1,10 +1,10 @@
-import { ModuleConfig } from './module-config.model';
-import { Enrollment } from '../models/enrollment.model';
-import { Student } from '../models/student.model';
-import { Course } from '../models/course.model';
-import { StudentService } from '../services/student.service';
-import { CourseService } from '../services/course.service';
-import { loadOptions } from './options-loader.util';
+import { ModuleConfig } from '../../core/config/module-config.model';
+import { Enrollment } from './enrollment.model';
+import { Student } from '../students/student.model';
+import { Course } from '../courses/course.model';
+import { StudentService } from '../students/student.service';
+import { CourseService } from '../courses/course.service';
+import { loadOptions } from '../../core/config/options-loader.util';
 
 const TERMS = ['Fall 2026', 'Spring 2026', 'Fall 2025'];
 const STATUSES: { label: string; value: Enrollment['status'] }[] = [

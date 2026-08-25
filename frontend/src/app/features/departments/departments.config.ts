@@ -1,5 +1,5 @@
-import { ModuleConfig } from './module-config.model';
-import { Department } from '../models/department.model';
+import { ModuleConfig } from '../../core/config/module-config.model';
+import { Department } from './department.model';
 
 export const DEPARTMENTS_CONFIG: ModuleConfig<Department> = {
   key: 'departments',

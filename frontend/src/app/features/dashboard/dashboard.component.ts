@@ -1,10 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { StudentService } from '../../core/services/student.service';
-import { DepartmentService } from '../../core/services/department.service';
-import { CourseService } from '../../core/services/course.service';
-import { InstructorService } from '../../core/services/instructor.service';
-import { EnrollmentService } from '../../core/services/enrollment.service';
+import { StudentService } from '../../features/students/student.service';
+import { DepartmentService } from '../../features/departments/department.service';
+import { CourseService } from '../../features/courses/course.service';
+import { InstructorService } from '../../features/instructors/instructor.service';
+import { EnrollmentService } from '../../features/enrollments/enrollment.service';
 import {
   LucideDynamicIcon,
   LucideUsers,
