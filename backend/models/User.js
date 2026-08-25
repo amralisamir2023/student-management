@@ -8,24 +8,41 @@ const userSchema = new mongoose.Schema(
       required: [true, 'Name is required'],
       trim: true,
     },
+
     email: {
       type: String,
       required: [true, 'Email is required'],
       unique: true,
       trim: true,
       lowercase: true,
-      match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Please enter a valid email address'],
+      match: [
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        'Please enter a valid email address',
+      ],
     },
+
     password: {
       type: String,
       required: [true, 'Password is required'],
       minlength: [6, 'Password must be at least 6 characters long'],
       select: false,
     },
+
     role: {
       type: String,
       enum: ['admin', 'user'],
       default: 'user',
+    },
+
+    // Forgot Password
+    resetPasswordToken: {
+      type: String,
+      default: null,
+    },
+
+    resetPasswordExpires: {
+      type: Date,
+      default: null,
     },
   },
   {
@@ -33,7 +50,7 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-
+// Hash password before saving
 userSchema.pre('save', async function () {
   if (!this.isModified('password')) {
     return;
@@ -43,7 +60,7 @@ userSchema.pre('save', async function () {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-
+// Compare entered password with hashed password
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return bcrypt.compare(enteredPassword, this.password);
 };
