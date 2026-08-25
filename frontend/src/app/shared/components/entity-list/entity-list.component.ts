@@ -49,6 +49,7 @@ export class EntityListComponent implements OnInit {
 
   modalMode: 'add' | 'edit' | null = null;
   editingItem: any = null;
+  formModel: Record<string, unknown> = {};
   deletingItem: any = null;
 
   private searchDebounce?: ReturnType<typeof setTimeout>;
@@ -122,17 +123,20 @@ export class EntityListComponent implements OnInit {
   openAdd(): void {
     this.modalMode = 'add';
     this.editingItem = null;
+    this.formModel = {};
   }
 
   openEdit(item: any, ev?: Event): void {
     ev?.stopPropagation();
     this.modalMode = 'edit';
     this.editingItem = item;
+    this.formModel = this.config.toFormModel(item);
   }
 
   closeModal(): void {
     this.modalMode = null;
     this.editingItem = null;
+    this.formModel = {};
   }
 
   submitForm(payload: Record<string, unknown>): void {

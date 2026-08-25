@@ -167,7 +167,7 @@
     [subtitle]="(modalMode === 'edit' ? 'PUT' : 'POST') + ' /api/' + moduleKey"
     [submitLabel]="modalMode === 'edit' ? 'Save changes' : config.addLabel"
     [fields]="config.fields"
-    [initialModel]="modalMode === 'edit' && editingItem ? config.toFormModel(editingItem) : {}"
+    [initialModel]="formModel"
     [optionsLoaders]="config.optionsLoaders"
     (submitForm)="submitForm($event)"
     (cancel)="closeModal()"
