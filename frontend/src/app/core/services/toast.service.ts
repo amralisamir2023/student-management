@@ -11,9 +11,9 @@ export class ToastService {
   private nextId = 1;
   readonly toasts = signal<Toast[]>([]);
 
-  // message comes straight from the API's own `message` field wherever
-  // possible, so the user sees exactly what the backend said — never a
-  // hardcoded string standing in for it.
+  
+  
+  
   success(message: string): void {
     this.push('success', message);
   }

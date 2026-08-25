@@ -17,7 +17,7 @@ export class ThemeService {
     try {
       localStorage.setItem(STORAGE_KEY, next ? 'dark' : 'light');
     } catch {
-      // localStorage unavailable — theme still applies for this page load.
+      
     }
   }
 
@@ -27,7 +27,7 @@ export class ThemeService {
       if (saved === 'dark') return true;
       if (saved === 'light') return false;
     } catch {
-      // fall through to system preference
+      
     }
     return typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches;
   }

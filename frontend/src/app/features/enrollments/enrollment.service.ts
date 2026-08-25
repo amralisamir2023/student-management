@@ -6,12 +6,12 @@ import { Enrollment } from './enrollment.model';
 import { CrudService } from '../../core/services/crud.service';
 import { API_BASE } from '../../core/api-base';
 
-// Real, connected service — talks to backend/controllers/enrollmentController.js.
-// Note: the backend returns 409 (not 200) for a duplicate
-// studentId+courseId+semester, so it comes back as an HTTP error, not a
-// { success: false } response — callers already handle that the same way
-// they handle any other HTTP error (via err.error.message), so no
-// special-casing is needed here.
+
+
+
+
+
+
 @Injectable({ providedIn: 'root' })
 export class EnrollmentService implements CrudService<Enrollment> {
   private readonly base = `${API_BASE}/enrollments`;

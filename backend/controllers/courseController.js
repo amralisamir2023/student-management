@@ -1,8 +1,8 @@
 const Course = require('../models/Course');
 const Enrollment = require('../models/Enrollment');
 
-// @desc    Get all courses (with search, filtering and populate)
-// @route   GET /api/courses
+
+
 const getCourses = async (req, res) => {
   try {
     const { name, departmentId, instructorId } = req.query;
@@ -36,8 +36,8 @@ const getCourses = async (req, res) => {
   }
 };
 
-// @desc    Get a single course by ID
-// @route   GET /api/courses/:id
+
+
 const getCourseById = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id).populate('departmentId').populate('instructorId');
@@ -64,8 +64,8 @@ const getCourseById = async (req, res) => {
   }
 };
 
-// @desc    Create a new course
-// @route   POST /api/courses
+
+
 const createCourse = async (req, res) => {
   try {
     const course = await Course.create(req.body);
@@ -101,8 +101,8 @@ const createCourse = async (req, res) => {
   }
 };
 
-// @desc    Update a course
-// @route   PUT /api/courses/:id
+
+
 const updateCourse = async (req, res) => {
   try {
     const course = await Course.findByIdAndUpdate(req.params.id, req.body, {
@@ -149,8 +149,8 @@ const updateCourse = async (req, res) => {
   }
 };
 
-// @desc    Delete a course
-// @route   DELETE /api/courses/:id
+
+
 const deleteCourse = async (req, res) => {
   try {
     const course = await Course.findByIdAndDelete(req.params.id);
@@ -163,8 +163,8 @@ const deleteCourse = async (req, res) => {
       });
     }
 
-    // Same reasoning as Student's cascade delete: without this, any
-    // enrollment pointing at this course would be left dangling.
+    
+    
     await Enrollment.deleteMany({ courseId: req.params.id });
 
     return res.status(200).json({

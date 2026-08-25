@@ -1,7 +1,7 @@
 const Enrollment = require('../models/Enrollment');
 
-// @desc    Get all enrollments (with search and filter by semester)
-// @route   GET /api/enrollments
+
+
 const getEnrollments = async (req, res) => {
   try {
     const { semester, search } = req.query;
@@ -13,7 +13,7 @@ const getEnrollments = async (req, res) => {
 
     let enrollments = await Enrollment.find(filter).populate('studentId').populate('courseId');
 
-    // Search by student name, course name, or course code
+    
     if (search) {
       const searchText = search.toLowerCase();
 
@@ -42,8 +42,8 @@ const getEnrollments = async (req, res) => {
   }
 };
 
-// @desc    Get a single enrollment by ID
-// @route   GET /api/enrollments/:id
+
+
 const getEnrollmentById = async (req, res) => {
   try {
     const enrollment = await Enrollment.findById(req.params.id).populate('studentId').populate('courseId');
@@ -78,8 +78,8 @@ const getEnrollmentById = async (req, res) => {
   }
 };
 
-// @desc    Get all courses a specific student is enrolled in
-// @route   GET /api/enrollments/student/:studentId
+
+
 const getStudentCourses = async (req, res) => {
   try {
     const enrollments = await Enrollment.find({ studentId: req.params.studentId })
@@ -108,8 +108,8 @@ const getStudentCourses = async (req, res) => {
   }
 };
 
-// @desc    Get all students enrolled in a specific course
-// @route   GET /api/enrollments/course/:courseId
+
+
 const getCourseStudents = async (req, res) => {
   try {
     const enrollments = await Enrollment.find({ courseId: req.params.courseId })
@@ -138,8 +138,8 @@ const getCourseStudents = async (req, res) => {
   }
 };
 
-// @desc    Enroll a student in a course
-// @route   POST /api/enrollments
+
+
 const createEnrollment = async (req, res) => {
   try {
     const enrollment = await Enrollment.create(req.body);
@@ -175,8 +175,8 @@ const createEnrollment = async (req, res) => {
   }
 };
 
-// @desc    Update an enrollment (e.g. grade or status)
-// @route   PUT /api/enrollments/:id
+
+
 const updateEnrollment = async (req, res) => {
   try {
     const enrollment = await Enrollment.findByIdAndUpdate(req.params.id, req.body, {
@@ -231,8 +231,8 @@ const updateEnrollment = async (req, res) => {
   }
 };
 
-// @desc    Remove a student from a course
-// @route   DELETE /api/enrollments/:id
+
+
 const deleteEnrollment = async (req, res) => {
   try {
     const enrollment = await Enrollment.findByIdAndDelete(req.params.id);

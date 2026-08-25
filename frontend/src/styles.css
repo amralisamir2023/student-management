@@ -100,7 +100,7 @@ button { cursor: pointer; }
 @keyframes sk { 0% { opacity: .5; } 50% { opacity: 1; } 100% { opacity: .5; } }
 @keyframes tin { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
-/* ---------- shared utility classes ---------- */
+
 .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-lg); }
 .mono { font-family: var(--font-mono); }
 
@@ -195,24 +195,21 @@ tbody tr:hover { background: var(--surface-alt); }
   box-shadow: 0 28px 70px rgba(8,10,24,.4); animation: tin .17s ease-out;
 }
 
-/* ---------- theme toggle ---------- */
+
 .theme-toggle {
   width: 38px; height: 38px; flex: none; border: 1px solid var(--border); background: var(--card-bg);
   border-radius: 11px; display: inline-flex; align-items: center; justify-content: center; color: var(--text-strong);
 }
 .theme-toggle:hover { background: var(--surface-alt); }
 
-/* ---------- shell nav ---------- */
+
 [data-sidebar] nav a { transition: background-color .12s ease, color .12s ease; }
 [data-sidebar] nav a:hover { background: rgba(255, 255, 255, .08); color: #fff; }
 [data-sidebar] nav a.nav-active { background: var(--blue); color: #fff; }
 
-/* The sidebar drawer, hamburger, icon-rail collapse and off-canvas overlay
-   are all handled with Tailwind responsive utility classes directly in
-   shell.component.html now (no inline-style-vs-media-query fights). */
 
-/* Auth pages: drop the illustrated side panel once it can't fit next to
-   the form, so the form takes the full width instead of being squeezed. */
+
+
 @media (max-width: 780px) {
   [data-auth-aside] { display: none !important; }
 }

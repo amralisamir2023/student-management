@@ -1,21 +1,21 @@
-// Populates the database with realistic, fully-connected demo data across
-// all five modules, so the Dashboard and every list page have something
-// real to show instead of being empty.
-//
-// This is ADDITIVE and safe to re-run: it never touches the `users`
-// collection (your own login accounts are never touched), and it looks up
-// existing departments/instructors by name/code and existing students by
-// email before creating anything, so running it twice won't create
-// duplicates — it just skips what's already there.
-//
-// Note: matching is by email/code (a real unique key), not by display
-// name — two different real people can share a name. If your database
-// already has old test records with the same names but different emails
-// than this seed data, you'll end up with visually duplicate-looking
-// names; that happened once on the shared dev cluster and was cleaned up
-// by hand rather than by this script.
-//
-// Usage: npm run seed   (from backend/)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 require('dotenv').config();
 const mongoose = require('mongoose');
 const connectDB = require('./config/db');
@@ -42,7 +42,7 @@ const INSTRUCTORS = [
   { name: 'Dr. Youssef Nabil', email: 'youssef.nabil@nti.edu', phone: '0100 666 7788', specialization: 'Networks' },
 ];
 
-// courseDept/courseInstructor reference the arrays above by index.
+
 const COURSES = [
   { name: 'Database Systems', code: 'DB101', hours: 3, deptCode: 'CS', instructorEmail: 'ahmed.mohamed@nti.edu' },
   { name: 'Web Development', code: 'WEB101', hours: 3, deptCode: 'CS', instructorEmail: 'mohamed.ali@nti.edu' },
@@ -67,9 +67,9 @@ const STUDENTS = [
   { name: 'Salma Adel', email: 'salma.adel@student.nti.edu', phone: '0101 234 5688', age: 20, level: 2, deptCode: 'IT' },
 ];
 
-// Enrollments reference students/courses by email/code — resolved to real
-// ids after everything above is created. Mix of semesters/statuses/grades
-// on purpose, so filtering and the dashboard have something to show.
+
+
+
 const ENROLLMENTS = [
   { studentEmail: 'ahmed.ali@student.nti.edu', courseCode: 'DB101', semester: 'Fall 2026', status: 'active' },
   { studentEmail: 'ahmed.ali@student.nti.edu', courseCode: 'WEB101', semester: 'Fall 2026', status: 'active' },

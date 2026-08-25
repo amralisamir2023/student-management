@@ -1,8 +1,8 @@
 const Student = require('../models/Student');
 const Enrollment = require('../models/Enrollment');
 
-// @desc    Get all students (with search, filtering and populate)
-// @route   GET /api/students
+
+
 const getStudents = async (req, res) => {
   try {
     const { name, departmentId, level } = req.query;
@@ -36,8 +36,8 @@ const getStudents = async (req, res) => {
   }
 };
 
-// @desc    Get a single student by ID
-// @route   GET /api/students/:id
+
+
 const getStudentById = async (req, res) => {
   try {
     const student = await Student.findById(req.params.id).populate('departmentId');
@@ -64,8 +64,8 @@ const getStudentById = async (req, res) => {
   }
 };
 
-// @desc    Create a new student
-// @route   POST /api/students
+
+
 const createStudent = async (req, res) => {
   try {
     const student = await Student.create(req.body);
@@ -101,8 +101,8 @@ const createStudent = async (req, res) => {
   }
 };
 
-// @desc    Update a student
-// @route   PUT /api/students/:id
+
+
 const updateStudent = async (req, res) => {
   try {
     const student = await Student.findByIdAndUpdate(req.params.id, req.body, {
@@ -149,8 +149,8 @@ const updateStudent = async (req, res) => {
   }
 };
 
-// @desc    Delete a student
-// @route   DELETE /api/students/:id
+
+
 const deleteStudent = async (req, res) => {
   try {
     const student = await Student.findByIdAndDelete(req.params.id);
@@ -163,9 +163,9 @@ const deleteStudent = async (req, res) => {
       });
     }
 
-    // Without this, any enrollment that pointed at this student would be
-    // left dangling — populate('studentId') would return null for it
-    // forever, showing up as a blank/"—" student in every enrollment list.
+    
+    
+    
     await Enrollment.deleteMany({ studentId: req.params.id });
 
     return res.status(200).json({

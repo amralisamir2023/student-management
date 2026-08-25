@@ -6,7 +6,7 @@ import { Instructor } from './instructor.model';
 import { CrudService } from '../../core/services/crud.service';
 import { API_BASE } from '../../core/api-base';
 
-// Real, connected service — talks to backend/controllers/instructorController.js.
+
 @Injectable({ providedIn: 'root' })
 export class InstructorService implements CrudService<Instructor> {
   private readonly base = `${API_BASE}/instructors`;

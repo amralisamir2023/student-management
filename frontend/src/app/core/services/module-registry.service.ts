@@ -17,13 +17,13 @@ export interface ModuleEntry<T = any> {
   service: CrudService<T>;
 }
 
-// Single place the generic list/detail/form components ask "what module is
-// this route for, and which config + service does it need?" — keyed by the
-// `module` value set on each route's `data` (see app.routes.ts).
-//
-// Every module here is real, connected to the live backend — see each
-// service file (student.service.ts, department.service.ts, etc.) for the
-// actual HttpClient calls.
+
+
+
+
+
+
+
 @Injectable({ providedIn: 'root' })
 export class ModuleRegistryService {
   private readonly registry: Record<string, ModuleEntry>;

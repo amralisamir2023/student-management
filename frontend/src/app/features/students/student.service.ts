@@ -6,8 +6,8 @@ import { Student } from './student.model';
 import { CrudService } from '../../core/services/crud.service';
 import { API_BASE } from '../../core/api-base';
 
-// Real, connected service — talks to backend/controllers/studentController.js.
-// This is the one module wired end-to-end to the live backend + database.
+
+
 @Injectable({ providedIn: 'root' })
 export class StudentService implements CrudService<Student> {
   private readonly base = `${API_BASE}/students`;

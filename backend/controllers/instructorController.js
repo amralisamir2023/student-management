@@ -1,8 +1,8 @@
 const Instructor = require('../models/Instructor');
 const Course = require('../models/Course');
 
-// @desc    Get all instructors (with search and filter by specialization)
-// @route   GET /api/instructors
+
+
 const getInstructors = async (req, res) => {
   try {
     const { name, specialization } = req.query;
@@ -32,8 +32,8 @@ const getInstructors = async (req, res) => {
   }
 };
 
-// @desc    Get a single instructor by ID
-// @route   GET /api/instructors/:id
+
+
 const getInstructorById = async (req, res) => {
   try {
     const instructor = await Instructor.findById(req.params.id);
@@ -68,8 +68,8 @@ const getInstructorById = async (req, res) => {
   }
 };
 
-// @desc    Get all courses taught by an instructor
-// @route   GET /api/instructors/:id/courses
+
+
 const getInstructorCourses = async (req, res) => {
   try {
     const instructor = await Instructor.findById(req.params.id);
@@ -106,8 +106,8 @@ const getInstructorCourses = async (req, res) => {
   }
 };
 
-// @desc    Create a new instructor
-// @route   POST /api/instructors
+
+
 const createInstructor = async (req, res) => {
   try {
     const instructor = await Instructor.create(req.body);
@@ -143,8 +143,8 @@ const createInstructor = async (req, res) => {
   }
 };
 
-// @desc    Update an instructor
-// @route   PUT /api/instructors/:id
+
+
 const updateInstructor = async (req, res) => {
   try {
     const instructor = await Instructor.findByIdAndUpdate(req.params.id, req.body, {
@@ -199,8 +199,8 @@ const updateInstructor = async (req, res) => {
   }
 };
 
-// @desc    Delete an instructor
-// @route   DELETE /api/instructors/:id
+
+
 const deleteInstructor = async (req, res) => {
   try {
     const instructor = await Instructor.findByIdAndDelete(req.params.id);

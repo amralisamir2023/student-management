@@ -13,10 +13,10 @@ const STATUSES: { label: string; value: Enrollment['status'] }[] = [
   { label: 'Dropped', value: 'dropped' },
 ];
 
-// populate() returns null (not the id) when the referenced document was
-// deleted without cascading — the backend now cascades deletes for
-// Students and Courses, so this is mainly a safety net for old data or
-// records created directly through the API.
+
+
+
+
 function studentLabel(e: Enrollment): string {
   const s = e.studentId as Student;
   return s && typeof s === 'object' ? s.name : e.studentId ? String(e.studentId) : 'Deleted student';
@@ -58,10 +58,10 @@ export function buildEnrollmentsConfig(studentService: StudentService, courseSer
     addLabel: 'New Enrollment',
     searchPlaceholder: 'Search enrollments',
     layout: 'table',
-    // NOTE: the real GET /api/enrollments only supports ?semester= and
-    // ?search= — there's no ?status= filter on the backend, so a "status"
-    // dropdown here would silently do nothing. Add one only after
-    // enrollmentController.js grows that support.
+    
+    
+    
+    
     filters: [{ key: 'semester', label: 'All terms', options: TERMS }],
     columns: [
       { label: 'Student', render: studentLabel, isPerson: true },

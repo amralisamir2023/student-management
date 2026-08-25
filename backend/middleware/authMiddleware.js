@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// Verifies the JWT sent in the Authorization header and attaches the user to req.user
+
 const protect = async (req, res, next) => {
   try {
     let token;
@@ -41,7 +41,7 @@ const protect = async (req, res, next) => {
   }
 };
 
-// Restricts access to users whose role is included in the allowed roles list
+
 const authorize = (...roles) => {
   return (req, res, next) => {
     if (!req.user || !roles.includes(req.user.role)) {

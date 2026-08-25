@@ -1,5 +1,5 @@
-// NOTE: Minimal starter model based on the documented spec (name, code, description).
-// Owned by Amr Tarek (Departments module) — extend/adjust as needed.
+
+
 const mongoose = require('mongoose');
 
 const departmentSchema = new mongoose.Schema(

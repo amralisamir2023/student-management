@@ -1,8 +1,8 @@
 const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
 
-// @desc    Register a new user
-// @route   POST /api/auth/register
+
+
 const register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
@@ -48,8 +48,8 @@ const register = async (req, res) => {
   }
 };
 
-// @desc    Authenticate a user and return a token
-// @route   POST /api/auth/login
+
+
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -93,8 +93,8 @@ const login = async (req, res) => {
   }
 };
 
-// @desc    Get the currently logged in user's profile
-// @route   GET /api/auth/me
+
+
 const getMe = async (req, res) => {
   try {
     return res.status(200).json({

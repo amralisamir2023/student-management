@@ -59,9 +59,9 @@ export class ShellComponent {
   theme = inject(ThemeService);
 
   nav = NAV;
-  // Off-canvas nav drawer state — only relevant below the mobile breakpoint
-  // (see [data-hamburger] / [data-sidebar] rules in styles.css), harmless
-  // on larger screens where the sidebar is always visible regardless.
+  
+  
+  
   sidebarOpen = signal(false);
 
   constructor() {

@@ -12,8 +12,8 @@ const {
 } = require('../controllers/enrollmentController');
 const { protect, authorize } = require('../middleware/authMiddleware');
 
-// NOTE: these two must stay above '/:id', otherwise Express would match
-// '/student/xyz' and '/course/xyz' as if 'student'/'course' were the :id.
+
+
 router.get('/student/:studentId', getStudentCourses);
 router.get('/course/:courseId', getCourseStudents);
 

@@ -1,7 +1,3 @@
-// NOTE: Minimal starter model based on the documented spec (name, email, phone, specialization).
-// Owned by Mirola (Instructors module) — extend/adjust as needed.
-// Created so Course.populate('instructorId') doesn't crash with MissingSchemaError
-// before the real Instructors module exists.
 const mongoose = require('mongoose');
 
 const instructorSchema = new mongoose.Schema(

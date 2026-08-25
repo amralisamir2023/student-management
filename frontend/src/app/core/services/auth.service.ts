@@ -19,15 +19,15 @@ export interface LoginPayload {
   password: string;
 }
 
-// Real, connected auth — talks to backend/controllers/authController.js.
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly _currentUser = signal<AuthUser | null>(this.readFromStorage());
 
   readonly currentUser = this._currentUser.asReadonly();
   readonly isLoggedIn = computed(() => this._currentUser() !== null);
-  // Only an admin may add/edit/delete anywhere in the app — matches
-  // protect + authorize('admin') on the backend routes exactly.
+  
+  
   readonly isAdmin = computed(() => this._currentUser()?.role === 'admin');
 
   constructor(private http: HttpClient) {}
@@ -70,8 +70,8 @@ export class AuthService {
       if (user) localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
       else localStorage.removeItem(STORAGE_KEY);
     } catch {
-      // localStorage unavailable (e.g. private browsing) — state still
-      // works for the current page load, it just won't survive a refresh.
+      
+      
     }
     this._currentUser.set(user);
   }

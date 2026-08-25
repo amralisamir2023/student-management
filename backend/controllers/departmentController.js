@@ -2,8 +2,8 @@ const Department = require('../models/Department');
 const Student = require('../models/Student');
 const Course = require('../models/Course');
 
-// @desc    Get all departments (with search by name)
-// @route   GET /api/departments
+
+
 const getDepartments = async (req, res) => {
   try {
     const { name } = req.query;
@@ -29,8 +29,8 @@ const getDepartments = async (req, res) => {
   }
 };
 
-// @desc    Get a single department by ID
-// @route   GET /api/departments/:id
+
+
 const getDepartmentById = async (req, res) => {
   try {
     const department = await Department.findById(req.params.id);
@@ -65,8 +65,8 @@ const getDepartmentById = async (req, res) => {
   }
 };
 
-// @desc    Get all students that belong to a department
-// @route   GET /api/departments/:id/students
+
+
 const getDepartmentStudents = async (req, res) => {
   try {
     const department = await Department.findById(req.params.id);
@@ -103,8 +103,8 @@ const getDepartmentStudents = async (req, res) => {
   }
 };
 
-// @desc    Get all courses that belong to a department
-// @route   GET /api/departments/:id/courses
+
+
 const getDepartmentCourses = async (req, res) => {
   try {
     const department = await Department.findById(req.params.id);
@@ -141,8 +141,8 @@ const getDepartmentCourses = async (req, res) => {
   }
 };
 
-// @desc    Create a new department
-// @route   POST /api/departments
+
+
 const createDepartment = async (req, res) => {
   try {
     const department = await Department.create(req.body);
@@ -186,8 +186,8 @@ const createDepartment = async (req, res) => {
   }
 };
 
-// @desc    Update a department
-// @route   PUT /api/departments/:id
+
+
 const updateDepartment = async (req, res) => {
   try {
     const department = await Department.findByIdAndUpdate(req.params.id, req.body, {
@@ -242,8 +242,8 @@ const updateDepartment = async (req, res) => {
   }
 };
 
-// @desc    Delete a department
-// @route   DELETE /api/departments/:id
+
+
 const deleteDepartment = async (req, res) => {
   try {
     const department = await Department.findByIdAndDelete(req.params.id);

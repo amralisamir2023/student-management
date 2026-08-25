@@ -33,7 +33,7 @@ const enrollmentSchema = new mongoose.Schema(
   }
 );
 
-// Prevent the same student from enrolling twice in the same course in the same semester
+
 enrollmentSchema.index({ studentId: 1, courseId: 1, semester: 1 }, { unique: true });
 
 const Enrollment = mongoose.model('Enrollment', enrollmentSchema);

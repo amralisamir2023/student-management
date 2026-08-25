@@ -6,7 +6,7 @@ import { Department } from './department.model';
 import { CrudService } from '../../core/services/crud.service';
 import { API_BASE } from '../../core/api-base';
 
-// Real, connected service — talks to backend/controllers/departmentController.js.
+
 @Injectable({ providedIn: 'root' })
 export class DepartmentService implements CrudService<Department> {
   private readonly base = `${API_BASE}/departments`;

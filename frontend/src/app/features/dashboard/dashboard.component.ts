@@ -68,8 +68,8 @@ export class DashboardComponent implements OnInit {
     this.enrollments.list().subscribe((res) => {
       this.setStat('Enrollments', String(res.data?.length ?? 0));
       this.recentEnrollments = (res.data ?? []).slice(0, 5).map((e) => {
-        // studentId/courseId come back populated (full objects) from the
-        // real API — fall back to the raw value only if it wasn't.
+        
+        
         const student = e.studentId as any;
         const course = e.courseId as any;
         return {
