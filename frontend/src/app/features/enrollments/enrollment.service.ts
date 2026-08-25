@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiResponse } from '../models/api-response.model';
-import { Enrollment } from '../models/enrollment.model';
-import { CrudService } from './crud.service';
-import { API_BASE } from '../api-base';
+import { ApiResponse } from '../../core/models/api-response.model';
+import { Enrollment } from './enrollment.model';
+import { CrudService } from '../../core/services/crud.service';
+import { API_BASE } from '../../core/api-base';
 
 // Real, connected service — talks to backend/controllers/enrollmentController.js.
 // Note: the backend returns 409 (not 200) for a duplicate

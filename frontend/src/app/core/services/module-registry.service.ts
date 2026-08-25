@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ModuleConfig } from '../config/module-config.model';
 import { CrudService } from './crud.service';
-import { StudentService } from './student.service';
-import { DepartmentService } from './department.service';
-import { CourseService } from './course.service';
-import { InstructorService } from './instructor.service';
-import { EnrollmentService } from './enrollment.service';
-import { buildStudentsConfig } from '../config/students.config';
-import { DEPARTMENTS_CONFIG } from '../config/departments.config';
-import { buildCoursesConfig } from '../config/courses.config';
-import { INSTRUCTORS_CONFIG } from '../config/instructors.config';
-import { buildEnrollmentsConfig } from '../config/enrollments.config';
+import { StudentService } from '../../features/students/student.service';
+import { DepartmentService } from '../../features/departments/department.service';
+import { CourseService } from '../../features/courses/course.service';
+import { InstructorService } from '../../features/instructors/instructor.service';
+import { EnrollmentService } from '../../features/enrollments/enrollment.service';
+import { buildStudentsConfig } from '../../features/students/students.config';
+import { DEPARTMENTS_CONFIG } from '../../features/departments/departments.config';
+import { buildCoursesConfig } from '../../features/courses/courses.config';
+import { INSTRUCTORS_CONFIG } from '../../features/instructors/instructors.config';
+import { buildEnrollmentsConfig } from '../../features/enrollments/enrollments.config';
 
 export interface ModuleEntry<T = any> {
   config: ModuleConfig<T>;

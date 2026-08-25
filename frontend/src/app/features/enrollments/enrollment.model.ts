@@ -1,5 +1,5 @@
-import { Student } from './student.model';
-import { Course } from './course.model';
+import { Student } from '../students/student.model';
+import { Course } from '../courses/course.model';
 
 export type EnrollmentStatus = 'active' | 'completed' | 'dropped';
 

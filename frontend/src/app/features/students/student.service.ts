@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ApiResponse } from '../models/api-response.model';
-import { Student } from '../models/student.model';
-import { CrudService } from './crud.service';
-import { API_BASE } from '../api-base';
+import { ApiResponse } from '../../core/models/api-response.model';
+import { Student } from './student.model';
+import { CrudService } from '../../core/services/crud.service';
+import { API_BASE } from '../../core/api-base';
 
 // Real, connected service — talks to backend/controllers/studentController.js.
 // This is the one module wired end-to-end to the live backend + database.

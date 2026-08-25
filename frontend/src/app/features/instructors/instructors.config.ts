@@ -1,5 +1,5 @@
-import { ModuleConfig } from './module-config.model';
-import { Instructor } from '../models/instructor.model';
+import { ModuleConfig } from '../../core/config/module-config.model';
+import { Instructor } from './instructor.model';
 
 const SPECS = ['Databases', 'Algorithms', 'Web Development', 'Networks', 'UI Engineering'];
 

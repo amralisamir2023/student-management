@@ -1,5 +1,5 @@
-import { Department } from './department.model';
-import { Instructor } from './instructor.model';
+import { Department } from '../departments/department.model';
+import { Instructor } from '../instructors/instructor.model';
 
 export interface Course {
   _id: string;
