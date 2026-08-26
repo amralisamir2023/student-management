@@ -9,7 +9,7 @@ You need the backend running too (`cd ../backend && npm run dev`, port 5000).
 
 ```bash
 npm install
-npm start        # ng serve, http://localhost:4200
+npm start        
 ```
 
 ## What's actually connected
