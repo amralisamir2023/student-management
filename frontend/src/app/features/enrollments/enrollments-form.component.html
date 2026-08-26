@@ -1,0 +1,62 @@
+<div class="modal-backdrop" (click)="cancelled.emit()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">{{ mode === 'edit' ? 'Edit Enrollment' : 'New Enrollment' }}</div>
+        <div class="mono modal-subtitle">{{ mode === 'edit' ? 'PUT' : 'POST' }} /api/enrollments</div>
+      </div>
+      <button (click)="cancelled.emit()" class="modal-close" title="Close"><svg lucideX [size]="15"></svg></button>
+    </div>
+
+    <div class="form-grid modal-body">
+      <label class="field">
+        <span class="field-label">Student<span class="required"> *</span></span>
+        <select [(ngModel)]="model.studentId" name="studentId">
+          <option value="">Select Student</option>
+          @for (s of students; track s._id) {
+            <option [value]="s._id">{{ s.name }} ({{ s.email }})</option>
+          }
+        </select>
+        @if (errors['studentId']) { <span class="field-error">{{ errors['studentId'] }}</span> }
+      </label>
+      <label class="field">
+        <span class="field-label">Course<span class="required"> *</span></span>
+        <select [(ngModel)]="model.courseId" name="courseId">
+          <option value="">Select Course</option>
+          @for (c of courses; track c._id) {
+            <option [value]="c._id">{{ c.name }} ({{ c.code }})</option>
+          }
+        </select>
+        @if (errors['courseId']) { <span class="field-error">{{ errors['courseId'] }}</span> }
+      </label>
+      <label class="field">
+        <span class="field-label">Term<span class="required"> *</span></span>
+        <select [(ngModel)]="model.semester" name="semester">
+          <option value="">Select Term</option>
+          @for (t of terms; track t) {
+            <option [value]="t">{{ t }}</option>
+          }
+        </select>
+        @if (errors['semester']) { <span class="field-error">{{ errors['semester'] }}</span> }
+      </label>
+      <label class="field">
+        <span class="field-label">Grade</span>
+        <input type="number" [(ngModel)]="model.grade" name="grade" min="0" max="100" placeholder="0 - 100" />
+        <span class="field-hint">Optional until the course ends</span>
+      </label>
+      <label class="field field-full">
+        <span class="field-label">Status<span class="required"> *</span></span>
+        <select [(ngModel)]="model.status" name="status">
+          @for (st of statuses; track st.value) {
+            <option [value]="st.value">{{ st.label }}</option>
+          }
+        </select>
+      </label>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-outline" (click)="cancelled.emit()">Cancel</button>
+      <button class="btn btn-primary" (click)="submit()">{{ mode === 'edit' ? 'Save changes' : 'New Enrollment' }}</button>
+    </div>
+  </div>
+</div>

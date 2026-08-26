@@ -1,31 +1,28 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service';
-import { ToastService } from '../../../core/services/toast.service';
-import { ModuleRegistryService } from '../../../core/services/module-registry.service';
-import { ModuleConfig } from '../../../core/config/module-config.model';
-import { EntityFormModalComponent } from '../entity-form-modal/entity-form-modal.component';
-import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
-import { LucideChevronLeft, LucideLock } from '../../icons';
+import { AuthService } from '../../core/services/auth.service';
+import { ToastService } from '../../core/services/toast.service';
+import { DepartmentService } from './department.service';
+import { Department } from './department.model';
+import { DepartmentsFormComponent } from './departments-form.component';
+import { ConfirmModalComponent } from '../../shared/components/confirm-modal/confirm-modal.component';
+import { LucideChevronLeft, LucideLock } from '../../shared/icons';
 
 @Component({
-  selector: 'app-entity-detail',
+  selector: 'app-departments-detail',
   standalone: true,
-  imports: [EntityFormModalComponent, ConfirmModalComponent, LucideChevronLeft, LucideLock],
-  templateUrl: './entity-detail.component.html',
+  imports: [DepartmentsFormComponent, ConfirmModalComponent, LucideChevronLeft, LucideLock],
+  templateUrl: './departments-detail.component.html',
+  styleUrl: './departments-detail.component.css',
 })
-export class EntityDetailComponent implements OnInit {
+export class DepartmentsDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private registry = inject(ModuleRegistryService);
+  private departmentService = inject(DepartmentService);
   private toast = inject(ToastService);
   auth = inject(AuthService);
 
-  moduleKey = '';
-  config!: ModuleConfig<any>;
-  private service!: ReturnType<ModuleRegistryService['get']>['service'];
-
-  item: any = null;
+  department: Department | null = null;
   loading = true;
   notFound = false;
 
@@ -33,13 +30,6 @@ export class EntityDetailComponent implements OnInit {
   deleting = false;
 
   ngOnInit(): void {
-    this.route.data.subscribe((data) => {
-      this.moduleKey = data['module'];
-      const entry = this.registry.get(this.moduleKey);
-      this.config = entry.config;
-      this.service = entry.service;
-      this.load();
-    });
     this.route.paramMap.subscribe(() => this.load());
   }
 
@@ -49,17 +39,14 @@ export class EntityDetailComponent implements OnInit {
 
   private load(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    if (!id || !this.service) return;
+    if (!id) return;
     this.loading = true;
     this.notFound = false;
-    this.service.getById(id).subscribe({
+    this.departmentService.getById(id).subscribe({
       next: (res) => {
         this.loading = false;
-        if (res.success && res.data) {
-          this.item = res.data;
-        } else {
-          this.notFound = true;
-        }
+        if (res.success && res.data) this.department = res.data;
+        else this.notFound = true;
       },
       error: () => {
         this.loading = false;
@@ -68,8 +55,12 @@ export class EntityDetailComponent implements OnInit {
     });
   }
 
+  initials(): string {
+    return this.department?.code.slice(0, 2).toUpperCase() ?? '';
+  }
+
   backToList(): void {
-    this.router.navigate(['/', this.moduleKey]);
+    this.router.navigate(['/departments']);
   }
 
   openEdit(): void {
@@ -80,13 +71,14 @@ export class EntityDetailComponent implements OnInit {
     this.editing = false;
   }
 
-  submitEdit(payload: Record<string, unknown>): void {
-    this.service.update(this.item._id, payload).subscribe({
+  save(payload: Record<string, unknown>): void {
+    if (!this.department) return;
+    this.departmentService.update(this.department._id, payload).subscribe({
       next: (res) => {
         if (res.success) {
           this.toast.success(res.message);
           this.editing = false;
-          this.item = res.data;
+          this.department = res.data;
         } else {
           this.toast.error(res.message);
         }
@@ -104,7 +96,8 @@ export class EntityDetailComponent implements OnInit {
   }
 
   confirmDelete(): void {
-    this.service.remove(this.item._id).subscribe({
+    if (!this.department) return;
+    this.departmentService.remove(this.department._id).subscribe({
       next: (res) => {
         this.deleting = false;
         if (res.success) {

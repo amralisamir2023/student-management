@@ -1,0 +1,73 @@
+<div>
+  <a (click)="backToList()" class="back-link">
+    <svg lucideChevronLeft [size]="14"></svg>
+    Back to Courses
+  </a>
+
+  @if (loading) {
+    <div class="state-box">
+      @for (k of [1,2,3]; track k) {
+        <div class="skeleton-line"></div>
+      }
+    </div>
+  } @else if (notFound) {
+    <div class="card not-found-card">
+      <div class="not-found-title">Not found</div>
+      <div class="not-found-sub">
+        This course doesn't exist, or was already deleted.
+      </div>
+    </div>
+  } @else if (course) {
+    <div class="card detail-card">
+      <div class="detail-header">
+        <div class="detail-avatar mono">
+          {{ course.code.slice(0, 2).toUpperCase() }}
+        </div>
+        <div class="detail-heading">
+          <div class="detail-title">{{ course.name }}</div>
+          <div class="mono detail-subtitle">{{ course.code }}</div>
+        </div>
+        <div class="detail-actions">
+          @if (canEdit) {
+            <button class="btn btn-outline" (click)="openEdit()">Edit</button>
+            <button class="btn btn-danger" (click)="askDelete()">Delete</button>
+          } @else {
+            <span class="btn btn-disabled"><svg lucideLock [size]="14"></svg>Admin only</span>
+          }
+        </div>
+      </div>
+      <div class="detail-info-grid">
+        <div>
+          <div class="info-label">Hours</div>
+          <div class="info-value">{{ course.hours }}</div>
+        </div>
+        <div>
+          <div class="info-label">Department</div>
+          <div class="info-value">{{ departmentName() }}</div>
+        </div>
+        <div>
+          <div class="info-label">Instructor</div>
+          <div class="info-value">{{ instructorName() }}</div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
+@if (editing && course) {
+  <app-courses-form
+    mode="edit"
+    [initial]="course"
+    (saved)="save($event)"
+    (cancelled)="closeEdit()"
+  ></app-courses-form>
+}
+
+@if (deleting) {
+  <app-confirm-modal
+    title="course"
+    subtitle="This record will be permanently removed."
+    (confirm)="confirmDelete()"
+    (cancel)="cancelDelete()"
+  ></app-confirm-modal>
+}

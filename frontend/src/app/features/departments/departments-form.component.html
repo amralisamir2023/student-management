@@ -1,0 +1,33 @@
+<div class="modal-backdrop" (click)="cancelled.emit()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">{{ mode === 'edit' ? 'Edit Department' : 'Add Department' }}</div>
+        <div class="mono modal-subtitle">{{ mode === 'edit' ? 'PUT' : 'POST' }} /api/departments</div>
+      </div>
+      <button (click)="cancelled.emit()" class="modal-close" title="Close"><svg lucideX [size]="15"></svg></button>
+    </div>
+
+    <div class="form-grid modal-body">
+      <label class="field field-full">
+        <span class="field-label">Department name<span class="required"> *</span></span>
+        <input type="text" [(ngModel)]="model.name" name="name" placeholder="Computer Science" />
+        @if (errors['name']) { <span class="field-error">{{ errors['name'] }}</span> }
+      </label>
+      <label class="field">
+        <span class="field-label">Department code<span class="required"> *</span></span>
+        <input type="text" [(ngModel)]="model.code" name="code" placeholder="CS" />
+        @if (errors['code']) { <span class="field-error">{{ errors['code'] }}</span> }
+      </label>
+      <label class="field field-full">
+        <span class="field-label">Description</span>
+        <textarea [(ngModel)]="model.description" name="description" rows="3" placeholder="Short summary of the department"></textarea>
+      </label>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-outline" (click)="cancelled.emit()">Cancel</button>
+      <button class="btn btn-primary" (click)="submit()">{{ mode === 'edit' ? 'Save changes' : 'Add Department' }}</button>
+    </div>
+  </div>
+</div>

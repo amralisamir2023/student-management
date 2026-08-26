@@ -1,0 +1,42 @@
+<div class="modal-backdrop" (click)="cancelled.emit()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">{{ mode === 'edit' ? 'Edit Instructor' : 'Add Instructor' }}</div>
+        <div class="mono modal-subtitle">{{ mode === 'edit' ? 'PUT' : 'POST' }} /api/instructors</div>
+      </div>
+      <button (click)="cancelled.emit()" class="modal-close" title="Close"><svg lucideX [size]="15"></svg></button>
+    </div>
+
+    <div class="form-grid modal-body">
+      <label class="field">
+        <span class="field-label">Full name<span class="required"> *</span></span>
+        <input type="text" [(ngModel)]="model.name" name="name" placeholder="Dr. Hana Fouad" />
+        @if (errors['name']) { <span class="field-error">{{ errors['name'] }}</span> }
+      </label>
+      <label class="field">
+        <span class="field-label">Email<span class="required"> *</span></span>
+        <input type="email" [(ngModel)]="model.email" name="email" placeholder="name@nti.edu" />
+        @if (errors['email']) { <span class="field-error">{{ errors['email'] }}</span> }
+      </label>
+      <label class="field">
+        <span class="field-label">Phone</span>
+        <input type="text" [(ngModel)]="model.phone" name="phone" placeholder="010 0000 0000" />
+      </label>
+      <label class="field">
+        <span class="field-label">Specialization</span>
+        <select [(ngModel)]="model.specialization" name="specialization">
+          <option value="">Select specialization</option>
+          @for (s of specializations; track s) {
+            <option [value]="s">{{ s }}</option>
+          }
+        </select>
+      </label>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-outline" (click)="cancelled.emit()">Cancel</button>
+      <button class="btn btn-primary" (click)="submit()">{{ mode === 'edit' ? 'Save changes' : 'Add Instructor' }}</button>
+    </div>
+  </div>
+</div>

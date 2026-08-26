@@ -9,6 +9,7 @@ import { LucideGraduationCap, LucideCheck, LucideAlertCircle, LucideEye } from '
   standalone: true,
   imports: [FormsModule, RouterLink, LucideGraduationCap, LucideCheck, LucideAlertCircle, LucideEye],
   templateUrl: './login.component.html',
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
   private auth = inject(AuthService);

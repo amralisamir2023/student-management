@@ -1,0 +1,104 @@
+<div class="page">
+
+  @if (!auth.isAdmin()) {
+    <div class="guest-banner">
+      <svg lucideLock [size]="17" class="guest-icon"></svg>
+      <span class="guest-text">
+        You are browsing as a guest. Records are visible, but add, edit and delete are locked
+        @if (!auth.isLoggedIn()) { — <a routerLink="/login" class="link-strong">sign in as admin</a> to make changes. }
+      </span>
+    </div>
+  }
+
+  <div class="toolbar">
+    <div class="search-box">
+      <svg lucideSearch [size]="15" class="search-icon"></svg>
+      <input
+        type="text"
+        placeholder="Search departments"
+        [(ngModel)]="search"
+        (ngModelChange)="onSearchChange()"
+        class="search-input"
+      />
+    </div>
+    <div class="flex-1"></div>
+    @if (canEdit) {
+      <button class="btn btn-primary" (click)="openAdd()"><svg lucidePlus [size]="15"></svg>Add Department</button>
+    } @else {
+      <span class="btn btn-disabled" title="Sign in as admin to add records"><svg lucideLock [size]="14"></svg>Add Department</span>
+    }
+  </div>
+
+  @if (loadFailed) {
+    <div class="error-banner">
+      <svg lucideAlertCircle [size]="19" class="error-icon"></svg>
+      <div class="flex-1">
+        <div class="error-title">Could not load departments</div>
+        <div class="mono error-sub">GET /api/departments — request failed</div>
+      </div>
+      <button class="btn btn-outline btn-sm" (click)="fetch()">Retry</button>
+    </div>
+  } @else if (loading) {
+    <div class="state-box">
+      @for (k of [1,2,3,4,5,6]; track k) {
+        <div class="skeleton-line"></div>
+      }
+    </div>
+  } @else if (departments.length === 0) {
+    <div class="card empty-card">
+      <div class="empty-icon-wrap">
+        <svg lucideInbox [size]="23" class="empty-icon"></svg>
+      </div>
+      <div class="empty-title">No departments yet</div>
+      <div class="empty-sub">
+        Nothing matches your search right now.
+      </div>
+      @if (canEdit) {
+        <button class="btn btn-outline" (click)="openAdd()">Add Department</button>
+      }
+    </div>
+  } @else {
+    <div class="card-grid">
+      @for (d of departments; track d._id) {
+        <div class="card dept-card" (click)="viewDepartment(d)">
+          <div class="dept-card-head">
+            <div>
+              <div class="dept-name">{{ d.name }}</div>
+              <span class="badge badge-code dept-badge">{{ d.code }}</span>
+            </div>
+            <div class="dept-avatar">{{ initialsFor(d) }}</div>
+          </div>
+          <p class="dept-description">{{ d.description }}</p>
+          <div class="dept-card-footer" (click)="$event.stopPropagation()">
+            <button class="btn btn-outline btn-sm" (click)="viewDepartment(d)">View details</button>
+            <div class="flex-1"></div>
+            @if (canEdit) {
+              <button class="btn btn-outline btn-sm" (click)="openEdit(d, $event)">Edit</button>
+              <button class="btn btn-danger btn-sm" (click)="askDelete(d, $event)">Delete</button>
+            } @else {
+              <span class="admin-only"><svg lucideLock [size]="12"></svg>Admin only</span>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
+
+@if (modalMode) {
+  <app-departments-form
+    [mode]="modalMode"
+    [initial]="editingDepartment"
+    (saved)="save($event)"
+    (cancelled)="closeModal()"
+  ></app-departments-form>
+}
+
+@if (deletingDepartment) {
+  <app-confirm-modal
+    title="department"
+    subtitle="This record will be permanently removed."
+    (confirm)="confirmDelete()"
+    (cancel)="cancelDelete()"
+  ></app-confirm-modal>
+}
