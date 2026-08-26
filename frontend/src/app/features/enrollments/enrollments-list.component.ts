@@ -31,6 +31,7 @@ const TERMS = ['Fall 2026', 'Spring 2026', 'Fall 2025'];
     LucideSearch,
   ],
   templateUrl: './enrollments-list.component.html',
+  styleUrl: './enrollments-list.component.css',
 })
 export class EnrollmentsListComponent implements OnInit {
   private enrollmentService = inject(EnrollmentService);

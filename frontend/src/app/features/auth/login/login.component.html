@@ -1,42 +1,42 @@
-<div style="min-height:100vh;display:flex;background:var(--card-bg)">
-  <div data-auth-aside style="width:44%;max-width:520px;flex:none;background:var(--navy);color:#fff;padding:48px 46px;display:flex;flex-direction:column;justify-content:space-between">
-    <div style="display:flex;align-items:center;gap:12px">
-      <div style="width:38px;height:38px;border-radius:11px;background:var(--blue);display:flex;align-items:center;justify-content:center">
+<div class="auth-page">
+  <div data-auth-aside class="auth-aside">
+    <div class="aside-brand">
+      <div class="aside-logo">
         <svg lucideGraduationCap [size]="20" color="#fff"></svg>
       </div>
-      <div style="font-size:15px;font-weight:800;letter-spacing:-.01em">Student Management System</div>
+      <div class="aside-brand-text">Student Management System</div>
     </div>
     <div>
-      <div style="font-size:34px;font-weight:800;letter-spacing:-.035em;line-height:1.2;max-width:400px">
+      <div class="aside-heading">
         One record for every student, course and enrollment.
       </div>
-      <div style="display:flex;flex-direction:column;gap:14px;margin-top:30px">
+      <div class="aside-features">
         @for (p of ['Students, departments, courses, instructors and enrollments — all in one place.', 'Role-based access: anyone can browse, only admins can change data.', 'Built on a real REST API backed by MongoDB.']; track p) {
-          <div style="display:flex;gap:11px;align-items:flex-start">
-            <div style="width:19px;height:19px;flex:none;margin-top:1px;border-radius:50%;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center">
+          <div class="aside-feature-row">
+            <div class="aside-feature-dot">
               <svg lucideCheck [size]="11" color="#a7b6ff"></svg>
             </div>
-            <span style="font-size:13.5px;line-height:1.6;color:rgba(255,255,255,.78)">{{ p }}</span>
+            <span class="aside-feature-text">{{ p }}</span>
           </div>
         }
       </div>
     </div>
-    <div class="mono" style="font-size:11.5px;color:rgba(255,255,255,.42)">NTI · MEAN Stack graduation project</div>
+    <div class="mono aside-footer">NTI · MEAN Stack graduation project</div>
   </div>
 
-  <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:40px 24px">
-    <div style="width:100%;max-width:392px">
-      <div style="font-size:26px;font-weight:800;letter-spacing:-.03em">Welcome back</div>
-      <div style="font-size:13.5px;color:var(--text-muted);margin-top:7px;line-height:1.6">Sign in to manage students, courses and enrollments.</div>
+  <div class="auth-form-wrap">
+    <div class="auth-form-inner">
+      <div class="auth-title">Welcome back</div>
+      <div class="auth-subtitle">Sign in to manage students, courses and enrollments.</div>
 
       @if (error) {
-        <div style="margin-top:20px;display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:11px;background:var(--danger-bg);border:1px solid var(--danger-border)">
-          <svg lucideAlertCircle [size]="16" style="color:var(--danger);flex:none"></svg>
-          <span style="font-size:12.5px;line-height:1.55;color:var(--danger);font-weight:600">{{ error }}</span>
+        <div class="auth-error">
+          <svg lucideAlertCircle [size]="16" class="auth-error-icon"></svg>
+          <span class="auth-error-text">{{ error }}</span>
         </div>
       }
 
-      <div style="display:flex;flex-direction:column;gap:15px;margin-top:24px">
+      <div class="auth-fields">
         <label class="field">
           <span class="field-label">Email</span>
           <input type="email" placeholder="name@nti.edu" [(ngModel)]="email" name="email" (keyup.enter)="submit()" />
@@ -47,16 +47,16 @@
         </label>
       </div>
 
-      <button class="btn btn-primary" style="width:100%;height:46px;margin-top:22px;justify-content:center" [disabled]="submitting" (click)="submit()">
+      <button class="btn btn-primary auth-submit" [disabled]="submitting" (click)="submit()">
         {{ submitting ? 'Signing in…' : 'Sign in' }}
       </button>
-      <button class="btn btn-outline" style="width:100%;height:44px;margin-top:10px;justify-content:center" (click)="continueAsGuest()">
+      <button class="btn btn-outline auth-guest-btn" (click)="continueAsGuest()">
         <svg lucideEye [size]="15"></svg>
         Browse as guest (read only)
       </button>
 
-      <div style="margin-top:20px;font-size:12.5px;color:var(--text-muted);text-align:center">
-        Don't have an account? <a routerLink="/register" style="font-weight:700">Create one</a>
+      <div class="auth-footer-text">
+        Don't have an account? <a routerLink="/register" class="auth-footer-link">Create one</a>
       </div>
     </div>
   </div>

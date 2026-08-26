@@ -1,5 +1,5 @@
 <div>
-  <a (click)="backToList()" style="display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;margin-bottom:16px;cursor:pointer">
+  <a (click)="backToList()" class="back-link">
     <svg lucideChevronLeft [size]="14"></svg>
     Back to Students
   </a>
@@ -11,23 +11,23 @@
       }
     </div>
   } @else if (notFound) {
-    <div class="card" style="padding:48px 24px;text-align:center">
-      <div style="font-size:15.5px;font-weight:800">Not found</div>
-      <div style="font-size:13px;color:var(--text-muted);margin-top:7px">
+    <div class="card not-found-card">
+      <div class="not-found-title">Not found</div>
+      <div class="not-found-sub">
         This student doesn't exist, or was already deleted.
       </div>
     </div>
   } @else if (student) {
-    <div class="card" style="overflow:hidden">
-      <div style="padding:22px;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;border-bottom:1px solid var(--border-soft)">
-        <div style="width:52px;height:52px;flex:none;border-radius:14px;background:var(--blue-soft);color:var(--indigo);font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center" class="mono">
+    <div class="card detail-card">
+      <div class="detail-header">
+        <div class="detail-avatar mono">
           {{ initials() }}
         </div>
-        <div style="min-width:200px;flex:1">
-          <div style="font-size:21px;font-weight:800;letter-spacing:-.025em">{{ student.name }}</div>
-          <div class="mono" style="font-size:12.5px;color:var(--text-faint);margin-top:4px">{{ student.email }}</div>
+        <div class="detail-heading">
+          <div class="detail-title">{{ student.name }}</div>
+          <div class="mono detail-subtitle">{{ student.email }}</div>
         </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div class="detail-actions">
           @if (canEdit) {
             <button class="btn btn-outline" (click)="openEdit()">Edit</button>
             <button class="btn btn-danger" (click)="askDelete()">Delete</button>
@@ -36,22 +36,22 @@
           }
         </div>
       </div>
-      <div style="padding:20px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;background:var(--surface-alt)">
+      <div class="detail-info-grid">
         <div>
-          <div style="font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faintest)">Phone</div>
-          <div style="font-size:14px;font-weight:700;margin-top:4px">{{ student.phone ?? '—' }}</div>
+          <div class="info-label">Phone</div>
+          <div class="info-value">{{ student.phone ?? '—' }}</div>
         </div>
         <div>
-          <div style="font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faintest)">Age</div>
-          <div style="font-size:14px;font-weight:700;margin-top:4px">{{ student.age != null ? student.age : '—' }}</div>
+          <div class="info-label">Age</div>
+          <div class="info-value">{{ student.age != null ? student.age : '—' }}</div>
         </div>
         <div>
-          <div style="font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faintest)">Level</div>
-          <div style="font-size:14px;font-weight:700;margin-top:4px">{{ student.level != null ? 'Level ' + student.level : '—' }}</div>
+          <div class="info-label">Level</div>
+          <div class="info-value">{{ student.level != null ? 'Level ' + student.level : '—' }}</div>
         </div>
         <div>
-          <div style="font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faintest)">Department</div>
-          <div style="font-size:14px;font-weight:700;margin-top:4px">{{ departmentName() }}</div>
+          <div class="info-label">Department</div>
+          <div class="info-value">{{ departmentName() }}</div>
         </div>
       </div>
     </div>

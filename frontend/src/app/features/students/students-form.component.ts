@@ -10,6 +10,7 @@ import { LucideX } from '../../shared/icons';
   standalone: true,
   imports: [FormsModule, LucideX],
   templateUrl: './students-form.component.html',
+  styleUrl: './students-form.component.css',
 })
 export class StudentsFormComponent implements OnChanges {
   private departmentService = inject(DepartmentService);

@@ -1,0 +1,86 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  background: var(--card-bg);
+}
+
+.auth-aside {
+  width: 44%;
+  max-width: 520px;
+  flex: none;
+  background: var(--navy);
+  color: #fff;
+  padding: 48px 46px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.aside-brand { display: flex; align-items: center; gap: 12px; }
+.aside-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aside-brand-text { font-size: 15px; font-weight: 800; letter-spacing: -.01em; }
+
+.aside-heading {
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -.035em;
+  line-height: 1.2;
+  max-width: 400px;
+}
+
+.aside-features { display: flex; flex-direction: column; gap: 14px; margin-top: 30px; }
+.aside-feature-row { display: flex; gap: 11px; align-items: flex-start; }
+.aside-feature-dot {
+  width: 19px;
+  height: 19px;
+  flex: none;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.aside-feature-text { font-size: 13.5px; line-height: 1.6; color: rgba(255, 255, 255, .78); }
+
+.aside-footer { font-size: 11.5px; color: rgba(255, 255, 255, .42); }
+
+.auth-form-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+.auth-form-inner { width: 100%; max-width: 392px; }
+
+.auth-title { font-size: 26px; font-weight: 800; letter-spacing: -.03em; }
+.auth-subtitle { font-size: 13.5px; color: var(--text-muted); margin-top: 7px; line-height: 1.6; }
+
+.auth-error {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border-radius: 11px;
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+}
+.auth-error-icon { color: var(--danger); flex: none; }
+.auth-error-text { font-size: 12.5px; line-height: 1.55; color: var(--danger); font-weight: 600; }
+
+.auth-fields { display: flex; flex-direction: column; gap: 15px; margin-top: 24px; }
+
+.auth-submit { width: 100%; height: 46px; margin-top: 22px; justify-content: center; }
+
+.auth-footer-text { margin-top: 20px; font-size: 12.5px; color: var(--text-muted); text-align: center; }
+.auth-footer-link { font-weight: 700; }

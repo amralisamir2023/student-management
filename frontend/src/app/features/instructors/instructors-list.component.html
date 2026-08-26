@@ -1,33 +1,33 @@
-<div style="display:flex;flex-direction:column;gap:20px">
+<div class="page">
 
   @if (!auth.isAdmin()) {
-    <div style="display:flex;gap:11px;align-items:center;padding:12px 16px;border-radius:12px;background:var(--blue-soft);border:1px solid rgba(79,109,245,.3)">
-      <svg lucideLock [size]="17" style="color:var(--indigo);flex:none"></svg>
-      <span style="font-size:12.5px;color:var(--indigo);font-weight:600;line-height:1.5">
+    <div class="guest-banner">
+      <svg lucideLock [size]="17" class="guest-icon"></svg>
+      <span class="guest-text">
         You are browsing as a guest. Records are visible, but add, edit and delete are locked
-        @if (!auth.isLoggedIn()) { — <a routerLink="/login" style="font-weight:800">sign in as admin</a> to make changes. }
+        @if (!auth.isLoggedIn()) { — <a routerLink="/login" class="link-strong">sign in as admin</a> to make changes. }
       </span>
     </div>
   }
 
-  <div style="display:flex;align-items:center;gap:11px;flex-wrap:wrap">
-    <div style="position:relative;flex:1;min-width:180px;max-width:320px">
-      <svg lucideSearch [size]="15" style="position:absolute;inset-inline-start:12px;top:12px;color:var(--text-faintest);pointer-events:none"></svg>
+  <div class="toolbar">
+    <div class="search-box">
+      <svg lucideSearch [size]="15" class="search-icon"></svg>
       <input
         type="text"
         placeholder="Search instructors"
         [(ngModel)]="search"
         (ngModelChange)="onSearchChange()"
-        style="width:100%;height:40px;border:1px solid var(--border);border-radius:11px;background:var(--card-bg);color:var(--text);padding-inline-start:34px;padding-inline-end:12px;font-size:13px"
+        class="search-input"
       />
     </div>
-    <select [(ngModel)]="specializationFilter" (ngModelChange)="onFilterChange()" style="height:40px;flex:none;border:1px solid var(--border);border-radius:11px;background:var(--card-bg);color:var(--text);padding:0 12px;font-size:13px;min-width:180px;font-weight:600">
+    <select [(ngModel)]="specializationFilter" (ngModelChange)="onFilterChange()" class="filter-select">
       <option value="">All specializations</option>
       @for (s of specializations; track s) {
         <option [value]="s">{{ s }}</option>
       }
     </select>
-    <div style="flex:1"></div>
+    <div class="flex-1"></div>
     @if (canEdit) {
       <button class="btn btn-primary" (click)="openAdd()"><svg lucidePlus [size]="15"></svg>Add Instructor</button>
     } @else {
@@ -36,11 +36,11 @@
   </div>
 
   @if (loadFailed) {
-    <div style="display:flex;gap:12px;align-items:center;padding:16px 18px;border-radius:13px;background:var(--danger-bg);border:1px solid var(--danger-border)">
-      <svg lucideAlertCircle [size]="19" style="color:var(--danger);flex:none"></svg>
-      <div style="flex:1">
-        <div style="font-size:13px;font-weight:800;color:var(--danger)">Could not load instructors</div>
-        <div class="mono" style="font-size:12px;color:var(--danger);margin-top:3px;opacity:.85">GET /api/instructors — request failed</div>
+    <div class="error-banner">
+      <svg lucideAlertCircle [size]="19" class="error-icon"></svg>
+      <div class="flex-1">
+        <div class="error-title">Could not load instructors</div>
+        <div class="mono error-sub">GET /api/instructors — request failed</div>
       </div>
       <button class="btn btn-outline btn-sm" (click)="fetch()">Retry</button>
     </div>
@@ -51,12 +51,12 @@
       }
     </div>
   } @else if (instructors.length === 0) {
-    <div class="card" style="padding:64px 24px;text-align:center">
-      <div style="width:50px;height:50px;margin:0 auto 16px;border-radius:14px;background:var(--page-bg);display:flex;align-items:center;justify-content:center">
-        <svg lucideInbox [size]="23" style="color:var(--text-disabled)"></svg>
+    <div class="card empty-card">
+      <div class="empty-icon-wrap">
+        <svg lucideInbox [size]="23" class="empty-icon"></svg>
       </div>
-      <div style="font-size:15.5px;font-weight:800">No instructors yet</div>
-      <div style="font-size:13px;color:var(--text-muted);margin:7px auto 18px;max-width:340px;line-height:1.6">
+      <div class="empty-title">No instructors yet</div>
+      <div class="empty-sub">
         Nothing matches your search or filters right now.
       </div>
       @if (canEdit) {
@@ -64,7 +64,7 @@
       }
     </div>
   } @else {
-    <section class="card" style="overflow:hidden">
+    <section class="card table-card">
       <div class="table-wrap">
         <table>
           <thead>
@@ -78,27 +78,27 @@
           </thead>
           <tbody>
             @for (i of instructors; track i._id) {
-              <tr (click)="viewInstructor(i)" style="cursor:pointer">
+              <tr (click)="viewInstructor(i)" class="row-clickable">
                 <td>
-                  <div style="display:flex;align-items:center;gap:10px">
+                  <div class="cell-person">
                     <div class="avatar">{{ initialsFor(i) }}</div>
                     <div>
-                      <div style="font-size:13px;font-weight:700;color:var(--text)">{{ i.name }}</div>
-                      <div class="mono" style="font-size:11px;color:var(--text-faintest)">{{ i.email }}</div>
+                      <div class="person-name">{{ i.name }}</div>
+                      <div class="mono person-sub">{{ i.email }}</div>
                     </div>
                   </div>
                 </td>
                 <td class="mono">{{ i.email }}</td>
                 <td class="mono">{{ i.phone ?? '—' }}</td>
                 <td><span class="badge badge-spec">{{ i.specialization ?? '—' }}</span></td>
-                <td class="th-right" style="text-align:right;white-space:nowrap" (click)="$event.stopPropagation()">
-                  <div style="display:inline-flex;gap:6px;align-items:center">
+                <td class="th-right actions-cell" (click)="$event.stopPropagation()">
+                  <div class="actions-inline">
                     <button class="icon-btn" title="View" (click)="viewInstructor(i)"><svg lucideEye [size]="15"></svg></button>
                     @if (canEdit) {
                       <button class="icon-btn" title="Edit" (click)="openEdit(i, $event)"><svg lucidePencil [size]="15"></svg></button>
-                      <button class="icon-btn icon-btn-danger" title="Delete" (click)="askDelete(i, $event)" style="color:var(--danger)"><svg lucideTrash2 [size]="15"></svg></button>
+                      <button class="icon-btn icon-btn-danger" title="Delete" (click)="askDelete(i, $event)"><svg lucideTrash2 [size]="15" class="icon-danger"></svg></button>
                     } @else {
-                      <span class="icon-btn" title="Sign in as admin to edit" style="color:var(--text-disabled);cursor:not-allowed"><svg lucideLock [size]="14"></svg></span>
+                      <span class="icon-btn icon-disabled" title="Sign in as admin to edit"><svg lucideLock [size]="14"></svg></span>
                     }
                   </div>
                 </td>
@@ -107,8 +107,8 @@
           </tbody>
         </table>
       </div>
-      <div style="padding:14px 20px;border-top:1px solid var(--border-soft);background:var(--surface-alt)">
-        <span style="font-size:12px;color:var(--text-faint)">{{ instructors.length }} result{{ instructors.length === 1 ? '' : 's' }}</span>
+      <div class="table-footer">
+        <span class="result-count">{{ instructors.length }} result{{ instructors.length === 1 ? '' : 's' }}</span>
       </div>
     </section>
   }

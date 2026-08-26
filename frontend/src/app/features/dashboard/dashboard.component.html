@@ -1,33 +1,33 @@
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:16px">
+<div class="stats-grid">
   @for (s of stats; track s.label) {
-    <div class="card" style="padding:18px;display:flex;flex-direction:column;gap:16px">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
-        <div style="width:38px;height:38px;border-radius:11px;background:var(--blue-soft);display:flex;align-items:center;justify-content:center">
+    <div class="card stat-card">
+      <div class="stat-head">
+        <div class="stat-icon">
           <svg [lucideIcon]="s.icon" [size]="18" color="#4f6df5"></svg>
         </div>
         @if (s.live) {
-          <span style="font-size:11px;font-weight:700;color:var(--success);background:var(--success-bg);border-radius:20px;padding:4px 10px">live</span>
+          <span class="live-badge">live</span>
         }
       </div>
       <div>
-        <div class="mono" style="font-size:32px;font-weight:800;letter-spacing:-.035em;line-height:1">{{ s.value }}</div>
-        <div style="font-size:12.5px;color:var(--text-muted);margin-top:6px;font-weight:600">{{ s.label }}</div>
+        <div class="mono stat-value">{{ s.value }}</div>
+        <div class="stat-label">{{ s.label }}</div>
       </div>
     </div>
   }
 </div>
 
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;align-items:start">
-  <section class="card" style="overflow:hidden">
-    <div style="padding:17px 20px;border-bottom:1px solid var(--border-soft);display:flex;align-items:center;justify-content:space-between;gap:12px">
+<div class="main-grid">
+  <section class="card enrollments-card">
+    <div class="card-head">
       <div>
-        <div style="font-size:14.5px;font-weight:800">Recent enrollments</div>
-        <div style="font-size:11.5px;color:var(--text-faint);margin-top:3px">Latest activity</div>
+        <div class="card-title">Recent enrollments</div>
+        <div class="card-subtitle">Latest activity</div>
       </div>
-      <a routerLink="/enrollments" style="font-size:12.5px;font-weight:700;white-space:nowrap">View all →</a>
+      <a routerLink="/enrollments" class="view-all-link">View all →</a>
     </div>
     <div class="table-wrap">
-      <table style="min-width:520px">
+      <table class="enrollments-table">
         <thead>
           <tr>
             <th>Student</th>
@@ -40,14 +40,14 @@
           @for (r of recentEnrollments; track r.student + r.course) {
             <tr>
               <td>
-                <div style="display:flex;align-items:center;gap:10px">
+                <div class="cell-person">
                   <div class="avatar">{{ r.student.slice(0, 2).toUpperCase() }}</div>
-                  <span style="font-size:13px;font-weight:700;color:var(--text)">{{ r.student }}</span>
+                  <span class="person-name">{{ r.student }}</span>
                 </div>
               </td>
               <td>{{ r.course }}</td>
               <td><span [class]="r.badgeClass">{{ r.status }}</span></td>
-              <td class="mono th-right" style="text-align:right">{{ r.grade }}</td>
+              <td class="mono th-right grade-cell">{{ r.grade }}</td>
             </tr>
           }
         </tbody>
@@ -55,34 +55,34 @@
     </div>
   </section>
 
-  <div style="display:flex;flex-direction:column;gap:20px">
-    <section class="card" style="padding:20px">
-      <div style="font-size:14.5px;font-weight:800">Students per department</div>
-      <div style="font-size:11.5px;color:var(--text-faint);margin-top:3px;margin-bottom:16px">Live count, grouped from real student records</div>
+  <div class="side-column">
+    <section class="card breakdown-card">
+      <div class="card-title">Students per department</div>
+      <div class="card-subtitle breakdown-subtitle">Live count, grouped from real student records</div>
       @if (departmentBreakdown.length === 0) {
-        <div style="font-size:12.5px;color:var(--text-faint)">No students yet.</div>
+        <div class="no-students">No students yet.</div>
       } @else {
-        <div style="display:flex;flex-direction:column;gap:13px">
+        <div class="breakdown-list">
           @for (d of departmentBreakdown; track d.name) {
             <div>
-              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
-                <span style="font-weight:700">{{ d.name }}</span>
-                <span class="mono" style="color:var(--text-faint)">{{ d.count }}</span>
+              <div class="breakdown-row">
+                <span class="breakdown-name">{{ d.name }}</span>
+                <span class="mono breakdown-count">{{ d.count }}</span>
               </div>
-              <div style="height:8px;border-radius:5px;background:var(--surface-alt);overflow:hidden">
-                <div [style.width.%]="d.pct" style="height:100%;background:var(--blue);border-radius:5px"></div>
+              <div class="breakdown-track">
+                <div [style.width.%]="d.pct" class="breakdown-fill"></div>
               </div>
             </div>
           }
         </div>
       }
     </section>
-    <section class="card" style="padding:20px">
-      <div style="font-size:14.5px;font-weight:800;margin-bottom:15px">Quick links</div>
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <a routerLink="/students" style="font-size:12.5px;font-weight:700">→ Manage students</a>
-        <a routerLink="/departments" style="font-size:12.5px;font-weight:700">→ Browse departments</a>
-        <a routerLink="/courses" style="font-size:12.5px;font-weight:700">→ Browse courses</a>
+    <section class="card quick-links-card">
+      <div class="card-title quick-links-title">Quick links</div>
+      <div class="quick-links-list">
+        <a routerLink="/students" class="quick-link">→ Manage students</a>
+        <a routerLink="/departments" class="quick-link">→ Browse departments</a>
+        <a routerLink="/courses" class="quick-link">→ Browse courses</a>
       </div>
     </section>
   </div>

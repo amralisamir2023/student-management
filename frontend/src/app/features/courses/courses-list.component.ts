@@ -30,6 +30,7 @@ import { LucidePlus, LucideLock, LucideAlertCircle, LucideInbox, LucideEye, Luci
     LucideSearch,
   ],
   templateUrl: './courses-list.component.html',
+  styleUrl: './courses-list.component.css',
 })
 export class CoursesListComponent implements OnInit {
   private courseService = inject(CourseService);

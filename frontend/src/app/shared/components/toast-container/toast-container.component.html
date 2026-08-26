@@ -1,0 +1,8 @@
+<div class="toast-wrap">
+  @for (t of toast.toasts(); track t.id) {
+    <div class="toast" [class.toast-success]="t.kind === 'success'" [class.toast-error]="t.kind === 'error'">
+      <span>{{ t.kind === 'success' ? '✓' : '⚠' }}</span>
+      <span class="toast-message">{{ t.message }}</span>
+    </div>
+  }
+</div>

@@ -8,6 +8,7 @@ import { LucideX } from '../../shared/icons';
   standalone: true,
   imports: [FormsModule, LucideX],
   templateUrl: './departments-form.component.html',
+  styleUrl: './departments-form.component.css',
 })
 export class DepartmentsFormComponent implements OnChanges {
   @Input() mode: 'add' | 'edit' = 'add';

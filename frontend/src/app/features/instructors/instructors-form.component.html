@@ -1,21 +1,21 @@
 <div class="modal-backdrop" (click)="cancelled.emit()">
   <div class="modal-box" (click)="$event.stopPropagation()">
-    <div style="padding:20px 24px;border-bottom:1px solid var(--border-soft);display:flex;align-items:flex-start;justify-content:space-between;gap:14px">
+    <div class="modal-header">
       <div>
-        <div style="font-size:16.5px;font-weight:800;letter-spacing:-.02em">{{ mode === 'edit' ? 'Edit Instructor' : 'Add Instructor' }}</div>
-        <div class="mono" style="font-size:11.5px;color:var(--text-faint);margin-top:4px">{{ mode === 'edit' ? 'PUT' : 'POST' }} /api/instructors</div>
+        <div class="modal-title">{{ mode === 'edit' ? 'Edit Instructor' : 'Add Instructor' }}</div>
+        <div class="mono modal-subtitle">{{ mode === 'edit' ? 'PUT' : 'POST' }} /api/instructors</div>
       </div>
-      <button (click)="cancelled.emit()" style="width:32px;height:32px;flex:none;border:none;background:var(--surface-alt);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--text)" title="Close"><svg lucideX [size]="15"></svg></button>
+      <button (click)="cancelled.emit()" class="modal-close" title="Close"><svg lucideX [size]="15"></svg></button>
     </div>
 
-    <div class="form-grid" style="padding:22px 24px;gap:16px">
+    <div class="form-grid modal-body">
       <label class="field">
-        <span class="field-label">Full name<span style="color:var(--danger)"> *</span></span>
+        <span class="field-label">Full name<span class="required"> *</span></span>
         <input type="text" [(ngModel)]="model.name" name="name" placeholder="Dr. Hana Fouad" />
         @if (errors['name']) { <span class="field-error">{{ errors['name'] }}</span> }
       </label>
       <label class="field">
-        <span class="field-label">Email<span style="color:var(--danger)"> *</span></span>
+        <span class="field-label">Email<span class="required"> *</span></span>
         <input type="email" [(ngModel)]="model.email" name="email" placeholder="name@nti.edu" />
         @if (errors['email']) { <span class="field-error">{{ errors['email'] }}</span> }
       </label>
@@ -34,7 +34,7 @@
       </label>
     </div>
 
-    <div style="padding:17px 24px;border-top:1px solid var(--border-soft);display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px;background:var(--surface-alt);border-radius:0 0 18px 18px">
+    <div class="modal-footer">
       <button class="btn btn-outline" (click)="cancelled.emit()">Cancel</button>
       <button class="btn btn-primary" (click)="submit()">{{ mode === 'edit' ? 'Save changes' : 'Add Instructor' }}</button>
     </div>

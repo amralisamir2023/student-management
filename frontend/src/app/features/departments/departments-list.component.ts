@@ -24,6 +24,7 @@ import { LucidePlus, LucideLock, LucideAlertCircle, LucideInbox, LucideSearch } 
     LucideSearch,
   ],
   templateUrl: './departments-list.component.html',
+  styleUrl: './departments-list.component.css',
 })
 export class DepartmentsListComponent implements OnInit {
   private departmentService = inject(DepartmentService);

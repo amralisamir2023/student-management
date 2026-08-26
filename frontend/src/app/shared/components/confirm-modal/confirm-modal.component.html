@@ -1,0 +1,19 @@
+<div class="modal-backdrop" (click)="cancel.emit()">
+  <div class="modal-box confirm-box" (click)="$event.stopPropagation()">
+    <div class="confirm-body">
+      <div class="confirm-icon">
+        <svg lucideAlertTriangle [size]="20"></svg>
+      </div>
+      <div>
+        <div class="confirm-title">Delete {{ title }}?</div>
+        <div class="confirm-sub">
+          This can't be undone. {{ subtitle }}
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" (click)="cancel.emit()">Cancel</button>
+      <button class="btn btn-danger" (click)="confirm.emit()">Delete</button>
+    </div>
+  </div>
+</div>

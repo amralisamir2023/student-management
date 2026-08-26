@@ -1,0 +1,100 @@
+.sidebar-surface {
+  background: var(--navy);
+  color: #fff;
+}
+
+.brand-border {
+  border-bottom: 1px solid rgba(255, 255, 255, .1);
+}
+.brand-logo {
+  width: 36px;
+  height: 36px;
+  background: var(--blue);
+}
+.brand-title {
+  font-size: 13.5px;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -.01em;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, .68);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.side-foot-border {
+  border-top: 1px solid rgba(255, 255, 255, .1);
+}
+.side-foot-box {
+  padding: 12px;
+  border-radius: 11px;
+  background: rgba(255, 255, 255, .06);
+}
+.side-foot-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, .9);
+}
+.side-foot-sub {
+  font-size: 11px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, .5);
+  margin-top: 4px;
+}
+
+.header-surface {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.hamburger-btn {
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+}
+
+.page-title {
+  font-size: 17.5px;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+}
+.page-subtitle {
+  font-size: 11.5px;
+  color: var(--text-faint);
+  margin-top: 3px;
+}
+
+.profile-border {
+  border-inline-start: 1px solid var(--border-soft);
+}
+.profile-avatar {
+  background: var(--blue-soft);
+  color: var(--indigo);
+  font-size: 12px;
+  font-weight: 800;
+}
+.profile-text {
+  line-height: 1.3;
+}
+.profile-name {
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.profile-role {
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.logout-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-faint);
+}
+
+.main-content {
+  max-width: 1420px;
+  width: 100%;
+}

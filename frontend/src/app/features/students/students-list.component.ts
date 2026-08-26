@@ -28,6 +28,7 @@ import { LucidePlus, LucideLock, LucideAlertCircle, LucideInbox, LucideEye, Luci
     LucideSearch,
   ],
   templateUrl: './students-list.component.html',
+  styleUrl: './students-list.component.css',
 })
 export class StudentsListComponent implements OnInit {
   private studentService = inject(StudentService);

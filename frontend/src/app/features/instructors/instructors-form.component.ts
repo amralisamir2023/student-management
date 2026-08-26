@@ -10,6 +10,7 @@ const SPECS = ['Databases', 'Algorithms', 'Web Development', 'Networks', 'UI Eng
   standalone: true,
   imports: [FormsModule, LucideX],
   templateUrl: './instructors-form.component.html',
+  styleUrl: './instructors-form.component.css',
 })
 export class InstructorsFormComponent implements OnChanges {
   @Input() mode: 'add' | 'edit' = 'add';

@@ -19,6 +19,7 @@ const STATUSES: { label: string; value: EnrollmentStatus }[] = [
   standalone: true,
   imports: [FormsModule, LucideX],
   templateUrl: './enrollments-form.component.html',
+  styleUrl: './enrollments-form.component.css',
 })
 export class EnrollmentsFormComponent implements OnChanges {
   private studentService = inject(StudentService);

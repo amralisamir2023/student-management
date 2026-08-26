@@ -13,6 +13,7 @@ import { LucideChevronLeft, LucideLock } from '../../shared/icons';
   standalone: true,
   imports: [DepartmentsFormComponent, ConfirmModalComponent, LucideChevronLeft, LucideLock],
   templateUrl: './departments-detail.component.html',
+  styleUrl: './departments-detail.component.css',
 })
 export class DepartmentsDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);

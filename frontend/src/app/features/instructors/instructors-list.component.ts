@@ -29,6 +29,7 @@ const SPECS = ['Databases', 'Algorithms', 'Web Development', 'Networks', 'UI Eng
     LucideSearch,
   ],
   templateUrl: './instructors-list.component.html',
+  styleUrl: './instructors-list.component.css',
 })
 export class InstructorsListComponent implements OnInit {
   private instructorService = inject(InstructorService);

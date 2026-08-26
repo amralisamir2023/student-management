@@ -15,6 +15,7 @@ import { LucideChevronLeft, LucideLock } from '../../shared/icons';
   standalone: true,
   imports: [CoursesFormComponent, ConfirmModalComponent, LucideChevronLeft, LucideLock],
   templateUrl: './courses-detail.component.html',
+  styleUrl: './courses-detail.component.css',
 })
 export class CoursesDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
