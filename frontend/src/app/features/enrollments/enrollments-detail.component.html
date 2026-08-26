@@ -1,0 +1,73 @@
+<div>
+  <a (click)="backToList()" class="back-link">
+    <svg lucideChevronLeft [size]="14"></svg>
+    Back to Enrollments
+  </a>
+
+  @if (loading) {
+    <div class="state-box">
+      @for (k of [1,2,3]; track k) {
+        <div class="skeleton-line"></div>
+      }
+    </div>
+  } @else if (notFound) {
+    <div class="card not-found-card">
+      <div class="not-found-title">Not found</div>
+      <div class="not-found-sub">
+        This enrollment doesn't exist, or was already deleted.
+      </div>
+    </div>
+  } @else if (enrollment) {
+    <div class="card detail-card">
+      <div class="detail-header">
+        <div class="detail-avatar mono">
+          {{ initials() }}
+        </div>
+        <div class="detail-heading">
+          <div class="detail-title">{{ studentLabel() }} → {{ courseLabel() }}</div>
+          <div class="mono detail-subtitle">{{ enrollment.semester }}</div>
+        </div>
+        <div class="detail-actions">
+          @if (canEdit) {
+            <button class="btn btn-outline" (click)="openEdit()">Edit</button>
+            <button class="btn btn-danger" (click)="askDelete()">Delete</button>
+          } @else {
+            <span class="btn btn-disabled"><svg lucideLock [size]="14"></svg>Admin only</span>
+          }
+        </div>
+      </div>
+      <div class="detail-info-grid">
+        <div>
+          <div class="info-label">Term</div>
+          <div class="info-value">{{ enrollment.semester }}</div>
+        </div>
+        <div>
+          <div class="info-label">Grade</div>
+          <div class="info-value">{{ enrollment.grade != null ? enrollment.grade : '—' }}</div>
+        </div>
+        <div>
+          <div class="info-label">Status</div>
+          <div class="info-value">{{ statusLabel() }}</div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
+@if (editing && enrollment) {
+  <app-enrollments-form
+    mode="edit"
+    [initial]="enrollment"
+    (saved)="save($event)"
+    (cancelled)="closeEdit()"
+  ></app-enrollments-form>
+}
+
+@if (deleting) {
+  <app-confirm-modal
+    title="enrollment"
+    subtitle="This record will be permanently removed."
+    (confirm)="confirmDelete()"
+    (cancel)="cancelDelete()"
+  ></app-confirm-modal>
+}

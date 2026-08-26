@@ -1,0 +1,127 @@
+<div class="page">
+
+  @if (!auth.isAdmin()) {
+    <div class="guest-banner">
+      <svg lucideLock [size]="17" class="guest-icon"></svg>
+      <span class="guest-text">
+        You are browsing as a guest. Records are visible, but add, edit and delete are locked
+        @if (!auth.isLoggedIn()) { — <a routerLink="/login" class="link-strong">sign in as admin</a> to make changes. }
+      </span>
+    </div>
+  }
+
+  <div class="toolbar">
+    <div class="search-box">
+      <svg lucideSearch [size]="15" class="search-icon"></svg>
+      <input
+        type="text"
+        placeholder="Search courses"
+        [(ngModel)]="search"
+        (ngModelChange)="onSearchChange()"
+        class="search-input"
+      />
+    </div>
+    <select [(ngModel)]="departmentFilter" (ngModelChange)="onFilterChange()" class="filter-select">
+      <option value="">All departments</option>
+      @for (d of departments; track d._id) {
+        <option [value]="d._id">{{ d.name }}</option>
+      }
+    </select>
+    <div class="flex-1"></div>
+    @if (canEdit) {
+      <button class="btn btn-primary" (click)="openAdd()"><svg lucidePlus [size]="15"></svg>Add Course</button>
+    } @else {
+      <span class="btn btn-disabled" title="Sign in as admin to add records"><svg lucideLock [size]="14"></svg>Add Course</span>
+    }
+  </div>
+
+  @if (loadFailed) {
+    <div class="error-banner">
+      <svg lucideAlertCircle [size]="19" class="error-icon"></svg>
+      <div class="flex-1">
+        <div class="error-title">Could not load courses</div>
+        <div class="mono error-sub">GET /api/courses — request failed</div>
+      </div>
+      <button class="btn btn-outline btn-sm" (click)="fetch()">Retry</button>
+    </div>
+  } @else if (loading) {
+    <div class="state-box">
+      @for (k of [1,2,3,4,5,6]; track k) {
+        <div class="skeleton-line"></div>
+      }
+    </div>
+  } @else if (courses.length === 0) {
+    <div class="card empty-card">
+      <div class="empty-icon-wrap">
+        <svg lucideInbox [size]="23" class="empty-icon"></svg>
+      </div>
+      <div class="empty-title">No courses yet</div>
+      <div class="empty-sub">
+        Nothing matches your search or filters right now.
+      </div>
+      @if (canEdit) {
+        <button class="btn btn-outline" (click)="openAdd()">Add Course</button>
+      }
+    </div>
+  } @else {
+    <section class="card table-card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Course name</th>
+              <th>Code</th>
+              <th>Hours</th>
+              <th>Department</th>
+              <th>Instructor</th>
+              <th class="th-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (c of courses; track c._id) {
+              <tr (click)="viewCourse(c)" class="row-clickable">
+                <td class="course-name-cell">{{ c.name }}</td>
+                <td><span class="badge badge-code">{{ c.code }}</span></td>
+                <td>{{ c.hours }}</td>
+                <td><span class="badge badge-dept">{{ departmentName(c) }}</span></td>
+                <td>{{ instructorName(c) }}</td>
+                <td class="th-right actions-cell" (click)="$event.stopPropagation()">
+                  <div class="actions-inline">
+                    <button class="icon-btn" title="View" (click)="viewCourse(c)"><svg lucideEye [size]="15"></svg></button>
+                    @if (canEdit) {
+                      <button class="icon-btn" title="Edit" (click)="openEdit(c, $event)"><svg lucidePencil [size]="15"></svg></button>
+                      <button class="icon-btn icon-btn-danger" title="Delete" (click)="askDelete(c, $event)"><svg lucideTrash2 [size]="15" class="icon-danger"></svg></button>
+                    } @else {
+                      <span class="icon-btn icon-disabled" title="Sign in as admin to edit"><svg lucideLock [size]="14"></svg></span>
+                    }
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="table-footer">
+        <span class="result-count">{{ courses.length }} result{{ courses.length === 1 ? '' : 's' }}</span>
+      </div>
+    </section>
+  }
+</div>
+
+@if (modalMode) {
+  <app-courses-form
+    [mode]="modalMode"
+    [initial]="editingCourse"
+    (saved)="save($event)"
+    (cancelled)="closeModal()"
+  ></app-courses-form>
+}
+
+@if (deletingCourse) {
+  <app-confirm-modal
+    title="course"
+    subtitle="This record will be permanently removed."
+    (confirm)="confirmDelete()"
+    (cancel)="cancelDelete()"
+  ></app-confirm-modal>
+}

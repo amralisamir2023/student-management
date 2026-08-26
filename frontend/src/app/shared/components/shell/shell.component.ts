@@ -52,6 +52,7 @@ const NAV: NavItem[] = [
     LucideMoon,
   ],
   templateUrl: './shell.component.html',
+  styleUrl: './shell.component.css',
 })
 export class ShellComponent {
   private auth = inject(AuthService);

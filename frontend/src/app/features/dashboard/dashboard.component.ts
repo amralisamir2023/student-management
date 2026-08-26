@@ -27,6 +27,7 @@ interface StatCard {
   standalone: true,
   imports: [RouterLink, LucideDynamicIcon],
   templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent implements OnInit {
   private students = inject(StudentService);

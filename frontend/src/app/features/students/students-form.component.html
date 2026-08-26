@@ -1,0 +1,58 @@
+<div class="modal-backdrop" (click)="cancelled.emit()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">{{ mode === 'edit' ? 'Edit Student' : 'Add Student' }}</div>
+        <div class="mono modal-subtitle">{{ mode === 'edit' ? 'PUT' : 'POST' }} /api/students</div>
+      </div>
+      <button (click)="cancelled.emit()" class="modal-close" title="Close"><svg lucideX [size]="15"></svg></button>
+    </div>
+
+    <div class="form-grid modal-body">
+      <label class="field">
+        <span class="field-label">Full name<span class="required"> *</span></span>
+        <input type="text" [(ngModel)]="model.name" name="name" placeholder="Mariam Adel" />
+        @if (errors['name']) { <span class="field-error">{{ errors['name'] }}</span> }
+      </label>
+      <label class="field">
+        <span class="field-label">Email<span class="required"> *</span></span>
+        <input type="email" [(ngModel)]="model.email" name="email" placeholder="name@nti.edu" />
+        @if (errors['email']) { <span class="field-error">{{ errors['email'] }}</span> }
+      </label>
+      <label class="field">
+        <span class="field-label">Phone</span>
+        <input type="text" [(ngModel)]="model.phone" name="phone" placeholder="010 0000 0000" />
+      </label>
+      <label class="field">
+        <span class="field-label">Age</span>
+        <input type="number" [(ngModel)]="model.age" name="age" min="16" max="60" placeholder="20" />
+      </label>
+      <label class="field">
+        <span class="field-label">Level<span class="required"> *</span></span>
+        <select [(ngModel)]="model.level" name="level">
+          <option value="">Select Level</option>
+          <option value="1">Level 1</option>
+          <option value="2">Level 2</option>
+          <option value="3">Level 3</option>
+          <option value="4">Level 4</option>
+        </select>
+        @if (errors['level']) { <span class="field-error">{{ errors['level'] }}</span> }
+      </label>
+      <label class="field field-full">
+        <span class="field-label">Department<span class="required"> *</span></span>
+        <select [(ngModel)]="model.departmentId" name="departmentId">
+          <option value="">Select Department</option>
+          @for (d of departments; track d._id) {
+            <option [value]="d._id">{{ d.name }} ({{ d.code }})</option>
+          }
+        </select>
+        @if (errors['departmentId']) { <span class="field-error">{{ errors['departmentId'] }}</span> }
+      </label>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-outline" (click)="cancelled.emit()">Cancel</button>
+      <button class="btn btn-primary" (click)="submit()">{{ mode === 'edit' ? 'Save changes' : 'Add Student' }}</button>
+    </div>
+  </div>
+</div>

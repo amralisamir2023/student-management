@@ -10,6 +10,7 @@ import { LucideGraduationCap, LucideCheck, LucideAlertCircle } from '../../../sh
   standalone: true,
   imports: [FormsModule, RouterLink, LucideGraduationCap, LucideCheck, LucideAlertCircle],
   templateUrl: './register.component.html',
+  styleUrl: './register.component.css',
 })
 export class RegisterComponent {
   private auth = inject(AuthService);

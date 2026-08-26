@@ -1,0 +1,77 @@
+<div>
+  <a (click)="backToList()" class="back-link">
+    <svg lucideChevronLeft [size]="14"></svg>
+    Back to Students
+  </a>
+
+  @if (loading) {
+    <div class="state-box">
+      @for (k of [1,2,3]; track k) {
+        <div class="skeleton-line"></div>
+      }
+    </div>
+  } @else if (notFound) {
+    <div class="card not-found-card">
+      <div class="not-found-title">Not found</div>
+      <div class="not-found-sub">
+        This student doesn't exist, or was already deleted.
+      </div>
+    </div>
+  } @else if (student) {
+    <div class="card detail-card">
+      <div class="detail-header">
+        <div class="detail-avatar mono">
+          {{ initials() }}
+        </div>
+        <div class="detail-heading">
+          <div class="detail-title">{{ student.name }}</div>
+          <div class="mono detail-subtitle">{{ student.email }}</div>
+        </div>
+        <div class="detail-actions">
+          @if (canEdit) {
+            <button class="btn btn-outline" (click)="openEdit()">Edit</button>
+            <button class="btn btn-danger" (click)="askDelete()">Delete</button>
+          } @else {
+            <span class="btn btn-disabled"><svg lucideLock [size]="14"></svg>Admin only</span>
+          }
+        </div>
+      </div>
+      <div class="detail-info-grid">
+        <div>
+          <div class="info-label">Phone</div>
+          <div class="info-value">{{ student.phone ?? '—' }}</div>
+        </div>
+        <div>
+          <div class="info-label">Age</div>
+          <div class="info-value">{{ student.age != null ? student.age : '—' }}</div>
+        </div>
+        <div>
+          <div class="info-label">Level</div>
+          <div class="info-value">{{ student.level != null ? 'Level ' + student.level : '—' }}</div>
+        </div>
+        <div>
+          <div class="info-label">Department</div>
+          <div class="info-value">{{ departmentName() }}</div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
+@if (editing && student) {
+  <app-students-form
+    mode="edit"
+    [initial]="student"
+    (saved)="save($event)"
+    (cancelled)="closeEdit()"
+  ></app-students-form>
+}
+
+@if (deleting) {
+  <app-confirm-modal
+    title="student"
+    subtitle="This record will be permanently removed."
+    (confirm)="confirmDelete()"
+    (cancel)="cancelDelete()"
+  ></app-confirm-modal>
+}
