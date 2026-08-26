@@ -1,0 +1,62 @@
+<div class="modal-backdrop" (click)="cancelled.emit()">
+  <div class="modal-box" (click)="$event.stopPropagation()">
+    <div style="padding:20px 24px;border-bottom:1px solid var(--border-soft);display:flex;align-items:flex-start;justify-content:space-between;gap:14px">
+      <div>
+        <div style="font-size:16.5px;font-weight:800;letter-spacing:-.02em">{{ mode === 'edit' ? 'Edit Enrollment' : 'New Enrollment' }}</div>
+        <div class="mono" style="font-size:11.5px;color:var(--text-faint);margin-top:4px">{{ mode === 'edit' ? 'PUT' : 'POST' }} /api/enrollments</div>
+      </div>
+      <button (click)="cancelled.emit()" style="width:32px;height:32px;flex:none;border:none;background:var(--surface-alt);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--text)" title="Close"><svg lucideX [size]="15"></svg></button>
+    </div>
+
+    <div class="form-grid" style="padding:22px 24px;gap:16px">
+      <label class="field">
+        <span class="field-label">Student<span style="color:var(--danger)"> *</span></span>
+        <select [(ngModel)]="model.studentId" name="studentId">
+          <option value="">Select Student</option>
+          @for (s of students; track s._id) {
+            <option [value]="s._id">{{ s.name }} ({{ s.email }})</option>
+          }
+        </select>
+        @if (errors['studentId']) { <span class="field-error">{{ errors['studentId'] }}</span> }
+      </label>
+      <label class="field">
+        <span class="field-label">Course<span style="color:var(--danger)"> *</span></span>
+        <select [(ngModel)]="model.courseId" name="courseId">
+          <option value="">Select Course</option>
+          @for (c of courses; track c._id) {
+            <option [value]="c._id">{{ c.name }} ({{ c.code }})</option>
+          }
+        </select>
+        @if (errors['courseId']) { <span class="field-error">{{ errors['courseId'] }}</span> }
+      </label>
+      <label class="field">
+        <span class="field-label">Term<span style="color:var(--danger)"> *</span></span>
+        <select [(ngModel)]="model.semester" name="semester">
+          <option value="">Select Term</option>
+          @for (t of terms; track t) {
+            <option [value]="t">{{ t }}</option>
+          }
+        </select>
+        @if (errors['semester']) { <span class="field-error">{{ errors['semester'] }}</span> }
+      </label>
+      <label class="field">
+        <span class="field-label">Grade</span>
+        <input type="number" [(ngModel)]="model.grade" name="grade" min="0" max="100" placeholder="0 - 100" />
+        <span class="field-hint">Optional until the course ends</span>
+      </label>
+      <label class="field" style="grid-column:1 / -1">
+        <span class="field-label">Status<span style="color:var(--danger)"> *</span></span>
+        <select [(ngModel)]="model.status" name="status">
+          @for (st of statuses; track st.value) {
+            <option [value]="st.value">{{ st.label }}</option>
+          }
+        </select>
+      </label>
+    </div>
+
+    <div style="padding:17px 24px;border-top:1px solid var(--border-soft);display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px;background:var(--surface-alt);border-radius:0 0 18px 18px">
+      <button class="btn btn-outline" (click)="cancelled.emit()">Cancel</button>
+      <button class="btn btn-primary" (click)="submit()">{{ mode === 'edit' ? 'Save changes' : 'New Enrollment' }}</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<div>
+  <a (click)="backToList()" style="display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;margin-bottom:16px;cursor:pointer">
+    <svg lucideChevronLeft [size]="14"></svg>
+    Back to Courses
+  </a>
+
+  @if (loading) {
+    <div class="state-box">
+      @for (k of [1,2,3]; track k) {
+        <div class="skeleton-line"></div>
+      }
+    </div>
+  } @else if (notFound) {
+    <div class="card" style="padding:48px 24px;text-align:center">
+      <div style="font-size:15.5px;font-weight:800">Not found</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-top:7px">
+        This course doesn't exist, or was already deleted.
+      </div>
+    </div>
+  } @else if (course) {
+    <div class="card" style="overflow:hidden">
+      <div style="padding:22px;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;border-bottom:1px solid var(--border-soft)">
+        <div style="width:52px;height:52px;flex:none;border-radius:14px;background:var(--blue-soft);color:var(--indigo);font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center" class="mono">
+          {{ course.code.slice(0, 2).toUpperCase() }}
+        </div>
+        <div style="min-width:200px;flex:1">
+          <div style="font-size:21px;font-weight:800;letter-spacing:-.025em">{{ course.name }}</div>
+          <div class="mono" style="font-size:12.5px;color:var(--text-faint);margin-top:4px">{{ course.code }}</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          @if (canEdit) {
+            <button class="btn btn-outline" (click)="openEdit()">Edit</button>
+            <button class="btn btn-danger" (click)="askDelete()">Delete</button>
+          } @else {
+            <span class="btn btn-disabled"><svg lucideLock [size]="14"></svg>Admin only</span>
+          }
+        </div>
+      </div>
+      <div style="padding:20px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;background:var(--surface-alt)">
+        <div>
+          <div style="font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faintest)">Hours</div>
+          <div style="font-size:14px;font-weight:700;margin-top:4px">{{ course.hours }}</div>
+        </div>
+        <div>
+          <div style="font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faintest)">Department</div>
+          <div style="font-size:14px;font-weight:700;margin-top:4px">{{ departmentName() }}</div>
+        </div>
+        <div>
+          <div style="font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faintest)">Instructor</div>
+          <div style="font-size:14px;font-weight:700;margin-top:4px">{{ instructorName() }}</div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
+@if (editing && course) {
+  <app-courses-form
+    mode="edit"
+    [initial]="course"
+    (saved)="save($event)"
+    (cancelled)="closeEdit()"
+  ></app-courses-form>
+}
+
+@if (deleting) {
+  <app-confirm-modal
+    title="course"
+    subtitle="This record will be permanently removed."
+    (confirm)="confirmDelete()"
+    (cancel)="cancelDelete()"
+  ></app-confirm-modal>
+}

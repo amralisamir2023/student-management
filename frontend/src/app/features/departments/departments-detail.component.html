@@ -1,7 +1,7 @@
 <div>
   <a (click)="backToList()" style="display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;margin-bottom:16px;cursor:pointer">
     <svg lucideChevronLeft [size]="14"></svg>
-    Back to {{ config.title }}
+    Back to Departments
   </a>
 
   @if (loading) {
@@ -14,18 +14,18 @@
     <div class="card" style="padding:48px 24px;text-align:center">
       <div style="font-size:15.5px;font-weight:800">Not found</div>
       <div style="font-size:13px;color:var(--text-muted);margin-top:7px">
-        This {{ config.singular }} doesn't exist, or was already deleted.
+        This department doesn't exist, or was already deleted.
       </div>
     </div>
-  } @else if (item) {
+  } @else if (department) {
     <div class="card" style="overflow:hidden">
       <div style="padding:22px;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;border-bottom:1px solid var(--border-soft)">
         <div style="width:52px;height:52px;flex:none;border-radius:14px;background:var(--blue-soft);color:var(--indigo);font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center" class="mono">
-          {{ config.initials(item) }}
+          {{ initials() }}
         </div>
         <div style="min-width:200px;flex:1">
-          <div style="font-size:21px;font-weight:800;letter-spacing:-.025em">{{ config.detailTitle(item) }}</div>
-          <div class="mono" style="font-size:12.5px;color:var(--text-faint);margin-top:4px">{{ config.detailSubtitle(item) }}</div>
+          <div style="font-size:21px;font-weight:800;letter-spacing:-.025em">{{ department.name }}</div>
+          <div class="mono" style="font-size:12.5px;color:var(--text-faint);margin-top:4px">{{ department.code }}</div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           @if (canEdit) {
@@ -37,33 +37,31 @@
         </div>
       </div>
       <div style="padding:20px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px;background:var(--surface-alt)">
-        @for (row of config.detailInfo(item); track row.label) {
-          <div>
-            <div style="font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faintest)">{{ row.label }}</div>
-            <div style="font-size:14px;font-weight:700;margin-top:4px">{{ row.value }}</div>
-          </div>
-        }
+        <div>
+          <div style="font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faintest)">Code</div>
+          <div style="font-size:14px;font-weight:700;margin-top:4px">{{ department.code }}</div>
+        </div>
+        <div>
+          <div style="font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--text-faintest)">Description</div>
+          <div style="font-size:14px;font-weight:700;margin-top:4px">{{ department.description ?? '—' }}</div>
+        </div>
       </div>
     </div>
   }
 </div>
 
-@if (editing && item) {
-  <app-entity-form-modal
-    [title]="'Edit ' + config.singular"
-    [subtitle]="'PUT /api/' + moduleKey + '/' + item._id"
-    submitLabel="Save changes"
-    [fields]="config.fields"
-    [initialModel]="config.toFormModel(item)"
-    [optionsLoaders]="config.optionsLoaders"
-    (submitForm)="submitEdit($event)"
-    (cancel)="closeEdit()"
-  ></app-entity-form-modal>
+@if (editing && department) {
+  <app-departments-form
+    mode="edit"
+    [initial]="department"
+    (saved)="save($event)"
+    (cancelled)="closeEdit()"
+  ></app-departments-form>
 }
 
 @if (deleting) {
   <app-confirm-modal
-    [title]="config.singular"
+    title="department"
     subtitle="This record will be permanently removed."
     (confirm)="confirmDelete()"
     (cancel)="cancelDelete()"
