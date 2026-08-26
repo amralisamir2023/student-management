@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 import { ShellComponent } from './shared/components/shell/shell.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { RegisterComponent } from './features/auth/register/register.component';
+import { ForgotPasswordComponent } from './features/auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './features/auth/reset-password/reset-password.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { StudentsListComponent } from './features/students/students-list.component';
 import { StudentsDetailComponent } from './features/students/students-detail.component';
@@ -17,6 +19,8 @@ import { EnrollmentsDetailComponent } from './features/enrollments/enrollments-d
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password/:token', component: ResetPasswordComponent },
   {
     path: '',
     component: ShellComponent,

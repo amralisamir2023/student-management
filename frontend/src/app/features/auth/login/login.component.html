@@ -47,6 +47,10 @@
         </label>
       </div>
 
+      <div class="auth-forgot-row">
+        <a routerLink="/forgot-password" class="auth-footer-link">Forgot password?</a>
+      </div>
+
       <button class="btn btn-primary auth-submit" [disabled]="submitting" (click)="submit()">
         {{ submitting ? 'Signing in…' : 'Sign in' }}
       </button>

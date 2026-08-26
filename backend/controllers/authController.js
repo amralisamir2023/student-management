@@ -1,3 +1,5 @@
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
 
@@ -111,4 +113,129 @@ const getMe = async (req, res) => {
   }
 };
 
-module.exports = { register, login, getMe };
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide your email',
+        data: null,
+      });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(200).json({
+        success: true,
+        message: 'If an account exists with this email, a password reset link has been sent.',
+        data: null,
+      });
+    }
+
+    const resetToken = crypto.randomBytes(32).toString('hex');
+
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = Date.now() + 15 * 60 * 1000;
+
+    await user.save({ validateBeforeSave: false });
+
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:4200';
+    const resetUrl = `${frontendUrl}/reset-password/${resetToken}`;
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: user.email,
+      subject: 'Password Reset Request',
+      text: `You requested a password reset.
+
+Click the following link to reset your password:
+
+${resetUrl}
+
+This link will expire in 15 minutes.
+
+If you did not request this, please ignore this email.`,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: 'Password reset link sent successfully',
+      data: null,
+    });
+  } catch (error) {
+    console.error('FORGOT PASSWORD ERROR:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Server error while sending password reset email',
+      data: null,
+    });
+  }
+};
+
+const resetPassword = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const { password } = req.body;
+
+    if (!password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide a new password',
+        data: null,
+      });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: 'Password must be at least 6 characters long',
+        data: null,
+      });
+    }
+
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() },
+    }).select('+password');
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid or expired password reset token',
+        data: null,
+      });
+    }
+
+    user.password = password;
+    user.resetPasswordToken = null;
+    user.resetPasswordExpires = null;
+
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: 'Password reset successfully',
+      data: null,
+    });
+  } catch (error) {
+    console.error('RESET PASSWORD ERROR:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Server error while resetting password',
+      data: null,
+    });
+  }
+};
+
+module.exports = { register, login, getMe, forgotPassword, resetPassword };
