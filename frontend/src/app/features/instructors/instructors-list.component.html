@@ -4,8 +4,7 @@
     <div class="guest-banner">
       <svg lucideLock [size]="17" class="guest-icon"></svg>
       <span class="guest-text">
-        You are browsing as a guest. Records are visible, but add, edit and delete are locked
-        @if (!auth.isLoggedIn()) { — <a routerLink="/login" class="link-strong">sign in as admin</a> to make changes. }
+        You're signed in as a regular user. Records are visible, but only admins can add, edit or delete.
       </span>
     </div>
   }

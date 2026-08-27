@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { ToastService } from '../../core/services/toast.service';
 import { EnrollmentService } from './enrollment.service';
@@ -18,7 +18,6 @@ const TERMS = ['Fall 2026', 'Spring 2026', 'Fall 2025'];
   standalone: true,
   imports: [
     FormsModule,
-    RouterLink,
     EnrollmentsFormComponent,
     ConfirmModalComponent,
     LucidePlus,

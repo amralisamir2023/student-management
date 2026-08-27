@@ -1,0 +1,24 @@
+.not-found-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 24px;
+  gap: 6px;
+}
+
+.not-found-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: var(--page-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+.not-found-icon { color: var(--text-disabled); }
+
+.not-found-title { font-size: 18px; font-weight: 800; }
+.not-found-sub { font-size: 13.5px; color: var(--text-muted); margin-bottom: 20px; }

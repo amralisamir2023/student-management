@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { ToastService } from '../../core/services/toast.service';
 import { DepartmentService } from './department.service';
@@ -14,7 +14,6 @@ import { LucidePlus, LucideLock, LucideAlertCircle, LucideInbox, LucideSearch } 
   standalone: true,
   imports: [
     FormsModule,
-    RouterLink,
     DepartmentsFormComponent,
     ConfirmModalComponent,
     LucidePlus,

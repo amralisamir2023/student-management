@@ -2,12 +2,12 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
-import { LucideGraduationCap, LucideCheck, LucideAlertCircle, LucideEye } from '../../../shared/icons';
+import { LucideGraduationCap, LucideCheck, LucideAlertCircle } from '../../../shared/icons';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, RouterLink, LucideGraduationCap, LucideCheck, LucideAlertCircle, LucideEye],
+  imports: [FormsModule, RouterLink, LucideGraduationCap, LucideCheck, LucideAlertCircle],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -41,9 +41,5 @@ export class LoginComponent {
         this.error = err?.error?.message ?? 'Could not sign in. Please try again.';
       },
     });
-  }
-
-  continueAsGuest(): void {
-    this.router.navigate(['/dashboard']);
   }
 }

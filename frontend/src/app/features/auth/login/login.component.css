@@ -83,7 +83,6 @@
 .auth-forgot-row { text-align: right; margin-top: 8px; }
 
 .auth-submit { width: 100%; height: 46px; margin-top: 22px; justify-content: center; }
-.auth-guest-btn { width: 100%; height: 44px; margin-top: 10px; justify-content: center; }
 
 .auth-footer-text { margin-top: 20px; font-size: 12.5px; color: var(--text-muted); text-align: center; }
 .auth-footer-link { font-weight: 700; }

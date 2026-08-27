@@ -15,6 +15,8 @@ import { CoursesListComponent } from './features/courses/courses-list.component'
 import { CoursesDetailComponent } from './features/courses/courses-detail.component';
 import { EnrollmentsListComponent } from './features/enrollments/enrollments-list.component';
 import { EnrollmentsDetailComponent } from './features/enrollments/enrollments-detail.component';
+import { NotFoundComponent } from './features/not-found/not-found.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -24,6 +26,9 @@ export const routes: Routes = [
   {
     path: '',
     component: ShellComponent,
+    // Protects every child route below in one place instead of repeating
+    // canActivate: [authGuard] on each of them individually.
+    canActivateChild: [authGuard],
     children: [
       { path: 'dashboard', component: DashboardComponent },
 
@@ -43,7 +48,7 @@ export const routes: Routes = [
       { path: 'enrollments/:id', component: EnrollmentsDetailComponent },
 
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
-      { path: '**', redirectTo: 'dashboard' },
+      { path: '**', component: NotFoundComponent },
     ],
   },
 ];

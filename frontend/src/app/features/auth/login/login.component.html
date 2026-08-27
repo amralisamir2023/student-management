@@ -11,7 +11,7 @@
         One record for every student, course and enrollment.
       </div>
       <div class="aside-features">
-        @for (p of ['Students, departments, courses, instructors and enrollments — all in one place.', 'Role-based access: anyone can browse, only admins can change data.', 'Built on a real REST API backed by MongoDB.']; track p) {
+        @for (p of ['Students, departments, courses, instructors and enrollments — all in one place.', 'Role-based access: sign in to browse, only admins can change data.', 'Built on a real REST API backed by MongoDB.']; track p) {
           <div class="aside-feature-row">
             <div class="aside-feature-dot">
               <svg lucideCheck [size]="11" color="#a7b6ff"></svg>
@@ -53,10 +53,6 @@
 
       <button class="btn btn-primary auth-submit" [disabled]="submitting" (click)="submit()">
         {{ submitting ? 'Signing in…' : 'Sign in' }}
-      </button>
-      <button class="btn btn-outline auth-guest-btn" (click)="continueAsGuest()">
-        <svg lucideEye [size]="15"></svg>
-        Browse as guest (read only)
       </button>
 
       <div class="auth-footer-text">
