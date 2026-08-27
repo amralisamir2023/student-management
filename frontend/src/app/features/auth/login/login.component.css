@@ -80,6 +80,8 @@
 
 .auth-fields { display: flex; flex-direction: column; gap: 15px; margin-top: 24px; }
 
+.auth-forgot-row { text-align: right; margin-top: 8px; }
+
 .auth-submit { width: 100%; height: 46px; margin-top: 22px; justify-content: center; }
 .auth-guest-btn { width: 100%; height: 44px; margin-top: 10px; justify-content: center; }
 
